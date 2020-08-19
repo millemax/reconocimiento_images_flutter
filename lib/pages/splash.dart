@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'login_page.dart';
+
 
 
 class Splashscreen extends StatefulWidget {
@@ -13,7 +15,7 @@ class _SplashscreenState extends State<Splashscreen> {
   @override
   void initState() {
     super.initState();
-   // Timer(Duration(seconds:11), ()=> Navigator.push(context,MaterialPageRoute(builder:(context)=> LoginPage())));
+    Timer(Duration(seconds:5), ()=> Navigator.push(context,MaterialPageRoute(builder:(context)=> LoginPage())));
         
   }
   @override
