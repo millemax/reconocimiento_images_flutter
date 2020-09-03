@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:MedicPlant/pages/splash.dart';
 
-import 'pages/login_page.dart';
+
 
 void main() {
   runApp(MyApp());
@@ -18,10 +18,11 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'hola como estas',
       home: Splashscreen(),
       theme: ThemeData(
-        primaryColor: Color(0xFF80E1D1),
+        primaryColor:Color(0xFF06B7A2),
       ),
         
     );
