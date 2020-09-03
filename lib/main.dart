@@ -16,7 +16,8 @@ class PlantApp extends StatelessWidget {
 
       //-----EL THEMA ---
       theme: ThemeData(
-        primaryColor: Color(0xFF80E1D1),
+        primaryColor: Color(0xFF06B7A2),
+        canvasColor: Colors.transparent,
       ),
     );
   }
