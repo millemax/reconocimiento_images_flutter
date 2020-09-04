@@ -61,4 +61,23 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
+
+  String emailValidator(String value) {
+    Pattern pattern =
+        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+    RegExp regex = new RegExp(pattern);
+    if (value.isEmpty) return '*Required';
+    if (!regex.hasMatch(value))
+      return '*Ingresa un correo valido';
+    else
+      return null;
+  }
+
+  String passwordValidator(String value) {
+    if (value.isEmpty) return '*Requerido';
+    if (value.length <= 6)
+      return 'Más de 6 caracteres porfavor';
+    else
+      return null;
+  }
 }
