@@ -1,11 +1,11 @@
 
-import 'dart:io';
+//import 'dart:io';
 import 'package:MedicPlant/pages/home.dart';
 import 'package:MedicPlant/pages/perfil.dart';
 import 'package:MedicPlant/pages/plantas.dart';
 import 'package:MedicPlant/pages/ubicacion.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+//import 'package:image_picker/image_picker.dart';
 
 class MenuScreen extends StatefulWidget {
   MenuScreen({Key key}) : super(key: key);
