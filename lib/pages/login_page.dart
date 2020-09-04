@@ -133,7 +133,7 @@ class _LoginPageState extends State<LoginPage> {
               child: Container(
                 height: 154,
                 child: Align(
-                  child: Image.asset("images/logoo.png", height: 120),
+                  child: Image.asset("assets/images/logoo.png", height: 120),
                 ),
               ),
             ),

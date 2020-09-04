@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
-
-import 'pages/login_page.dart';
+import 'package:MedicPlant/pages/splash.dart';
 
 void main() {
-  runApp(PlantApp());
+  runApp(MyApp());
 }
 
-class PlantApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  MyApp({Key key}) : super(key: key);
+
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Planta Medic',
-      home: LoginPage(),
-
-      //-----EL THEMA ---
+      title: 'hola como estas',
+      home: Splashscreen(),
       theme: ThemeData(
         primaryColor: Color(0xFF06B7A2),
         canvasColor: Colors.transparent,
