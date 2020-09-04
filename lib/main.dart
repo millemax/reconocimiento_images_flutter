@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:MedicPlant/pages/splash.dart';
 
-
-
 void main() {
   runApp(MyApp());
 }
@@ -22,9 +20,8 @@ class _MyAppState extends State<MyApp> {
       title: 'hola como estas',
       home: Splashscreen(),
       theme: ThemeData(
-        primaryColor:Color(0xFF06B7A2),
+        primaryColor: Color(0xFF06B7A2),
       ),
-        
     );
   }
 }
