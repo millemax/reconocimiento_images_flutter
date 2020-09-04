@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "563148979471",
+    "firebase_url": "https://medicplast-bd.firebaseio.com",
+    "project_id": "medicplast-bd",
+    "storage_bucket": "medicplast-bd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:563148979471:android:3a6e1aa0bf4bff8d92527a",
+        "android_client_info": {
+          "package_name": "com.example.MedicPlant"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "563148979471-nar6qbndhf6cfedut8jea3s7gnk6dbbv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmO7-Sl1L1r2R_0rhLgZU6HxzRKL7kDmY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "563148979471-nar6qbndhf6cfedut8jea3s7gnk6dbbv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
