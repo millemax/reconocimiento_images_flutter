@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/flutter_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 
 
 class LoginPage extends StatefulWidget {
@@ -19,6 +20,10 @@ class _LoginPageState extends State<LoginPage> {
   String _displayName;
 
   bool _obscure = false;
+  
+  
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -245,10 +250,31 @@ class _LoginPageState extends State<LoginPage> {
     _email = _emailController.text;
     _password = _passwordController.text;
     _displayName = _nameController.text;
+     print(_email);
+
+    FirebaseAuth.instance
+        .createUserWithEmailAndPassword(
+            email:_email, password:_password,).then((value){
+              print("Usuario creado");
+            });
 
     _emailController.clear();
     _passwordController.clear();
     _nameController.clear();
+
+
+
+  }
+
+  void _loginuser(){
+    _email = _emailController.text;
+    _password = _passwordController.text;
+    _displayName = _nameController.text;
+
+    _emailController.clear();
+    _passwordController.clear();
+    _nameController.clear();
+
   }
 
 //----------funcion ---logearse
