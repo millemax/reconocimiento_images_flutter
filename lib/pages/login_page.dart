@@ -175,6 +175,7 @@ class _LoginPageState extends State<LoginPage> {
 //-------widgett boton de login------
   Widget _button(String text, Color splashColor, Color highlightColor,
       Color fillColor, Color textColor, void function()) {
+    
     return RaisedButton(
       highlightElevation: 0.0,
       splashColor: splashColor,
@@ -195,6 +196,8 @@ class _LoginPageState extends State<LoginPage> {
       ),
       onPressed: () {
         function();
+      
+        
       },
     );
   }
@@ -250,13 +253,7 @@ class _LoginPageState extends State<LoginPage> {
     _email = _emailController.text;
     _password = _passwordController.text;
     _displayName = _nameController.text;
-     print(_email);
-
-    FirebaseAuth.instance
-        .createUserWithEmailAndPassword(
-            email:_email, password:_password,).then((value){
-              print("Usuario creado");
-            });
+     
 
     _emailController.clear();
     _passwordController.clear();
@@ -266,16 +263,7 @@ class _LoginPageState extends State<LoginPage> {
 
   }
 
-  void _loginuser(){
-    _email = _emailController.text;
-    _password = _passwordController.text;
-    _displayName = _nameController.text;
 
-    _emailController.clear();
-    _passwordController.clear();
-    _nameController.clear();
-
-  }
 
 //----------funcion ---logearse
   void _loginSheet() {
