@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-
-
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -12,18 +10,13 @@ class _LoginPageState extends State<LoginPage> {
   //-------variable para detectar el cambio de scaffold
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   //-----declaramos los campos de login email y password-
-  TextEditingController _emailController = new TextEditingController();
-  TextEditingController _passwordController = new TextEditingController();
-  TextEditingController _nameController = new TextEditingController();
+  final GlobalKey<FormState> _formKey1 = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey2 = GlobalKey<FormState>();
+
   String _email;
+  String _nombres;
   String _password;
-  String _displayName;
-
-  bool _obscure = false;
-  
-  
-
-  
+  bool _autoValidate = false;
 
   @override
   Widget build(BuildContext context) {
@@ -175,7 +168,6 @@ class _LoginPageState extends State<LoginPage> {
 //-------widgett boton de login------
   Widget _button(String text, Color splashColor, Color highlightColor,
       Color fillColor, Color textColor, void function()) {
-    
     return RaisedButton(
       highlightElevation: 0.0,
       splashColor: splashColor,
@@ -196,74 +188,71 @@ class _LoginPageState extends State<LoginPage> {
       ),
       onPressed: () {
         function();
-      
-        
       },
     );
   }
 
-  //-----funciones de login y registro ---
-  Widget _input(Icon icon, String label, String hint,
-      TextEditingController controller, bool obsecure) {
-    return Container(
-      padding: EdgeInsets.only(left: 20, right: 20),
-      child: TextFormField(
-        controller: controller,
-        obscureText: obsecure,
-        style: TextStyle(
-          fontSize: 20,
-        ),
-        decoration: InputDecoration(
-          labelStyle: TextStyle(
-            fontSize: 25,
-          ),
-          hintStyle: TextStyle(
-            fontSize: 20,
-          ),
-          labelText: label,
-          hintText: hint, // ---texto guia--
-          //-----cambiar colores del borde de boton---
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(30),
-            borderSide: BorderSide(
-              color: Theme.of(context).primaryColor,
-              width: 2,
-            ),
-          ),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(30),
-            borderSide:
-                BorderSide(color: Theme.of(context).primaryColor, width: 3),
-          ),
-          //----llama los iconos declarados
-          prefixIcon: Padding(
-            child: IconTheme(
-                data: IconThemeData(color: Theme.of(context).primaryColor),
-                child: icon),
-            padding: EdgeInsets.only(left: 30, right: 10),
-          ),
+  //-------widgett boton de login------
+  Widget _buttonEnvio(String text, Color splashColor, Color highlightColor,
+      Color fillColor, Color textColor) {
+    return RaisedButton(
+      highlightElevation: 0.0,
+      splashColor: splashColor,
+      highlightColor: highlightColor,
+      elevation: 0.0,
+      color: fillColor,
+      //-----bordear
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(30.0),
+      ),
+      child: Padding(
+        padding: EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+        child: Text(
+          text,
+          style: TextStyle(
+              fontWeight: FontWeight.bold, color: textColor, fontSize: 20),
         ),
       ),
+      onPressed: () {
+        if (_formKey1.currentState.validate()) {
+          Navigator.pushReplacementNamed(context, 'menu');
+          print('Email: $_email');
+          print('Password: $_password');
+        }
+      },
     );
   }
 
-//-----metodos------
-//----------------- priedad  login user
-  void _registerUser() {
-    _email = _emailController.text;
-    _password = _passwordController.text;
-    _displayName = _nameController.text;
-     
-
-    _emailController.clear();
-    _passwordController.clear();
-    _nameController.clear();
-
-
-
+  Widget _buttonEnvioRegistro(String text, Color splashColor,
+      Color highlightColor, Color fillColor, Color textColor) {
+    return RaisedButton(
+      highlightElevation: 0.0,
+      splashColor: splashColor,
+      highlightColor: highlightColor,
+      elevation: 0.0,
+      color: fillColor,
+      //-----bordear
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(30.0),
+      ),
+      child: Padding(
+        padding: EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+        child: Text(
+          text,
+          style: TextStyle(
+              fontWeight: FontWeight.bold, color: textColor, fontSize: 20),
+        ),
+      ),
+      onPressed: () {
+        if (_formKey2.currentState.validate()) {
+          Navigator.pushReplacementNamed(context, 'menu');
+          print('Email: $_nombres');
+          print('Email: $_email');
+          print('Password: $_password');
+        }
+      },
+    );
   }
-
-
 
 //----------funcion ---logearse
   void _loginSheet() {
@@ -300,8 +289,6 @@ class _LoginPageState extends State<LoginPage> {
                             //--------------estas variables declaradas en la parte superior------
                             onPressed: () {
                               Navigator.of(context).pop();
-                              _emailController.clear();
-                              _passwordController.clear();
                             },
                           ),
                         ),
@@ -362,30 +349,42 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                         //--------------campo nombre login----
-                        Padding(
-                          padding: EdgeInsets.only(
-                            bottom: 20,
-                            top: 60,
-                          ),
-                          child: _input(
-                            Icon(Icons.account_circle),
-                            "Usuario",
-                            "Usuario",
-                            _nameController,
-                            false,
-                          ),
-                        ),
-                        //-------------------campo contraseña login
-                        Padding(
-                          padding: EdgeInsets.only(bottom: 20),
-                          child: _input(
-                            Icon(Icons.lock),
-                            "Contraseña",
-                            "Contraseña",
-                            _passwordController,
-                            true,
-                          ),
-                        ),
+
+                        Form(
+                            key: _formKey1,
+                            autovalidate: _autoValidate,
+                            child: Column(
+                              children: [
+                                Padding(
+                                    padding:
+                                        EdgeInsets.only(bottom: 20, top: 60),
+                                    child: CustomTextField(
+                                      onchanged: (valor) {
+                                        _email = valor;
+                                      },
+                                      keyboardType: TextInputType.emailAddress,
+                                      icon: Icon(Icons.email),
+                                      obsecure: false,
+                                      validator: emailValidator,
+                                      hint: "Correo",
+                                      label: "Correo",
+                                    )),
+                                //-------------------campo contraseña login
+                                Padding(
+                                    padding: EdgeInsets.only(bottom: 20),
+                                    child: CustomTextField(
+                                      onchanged: (valor) {
+                                        _password = valor;
+                                      },
+                                      icon: Icon(Icons.lock),
+                                      obsecure: true,
+                                      validator: passwordValidator,
+                                      hint: "Contraseña",
+                                      label: "Contraseña",
+                                    )),
+                              ],
+                            )),
+
                         //----------------boton registro en vista login---
                         Padding(
                           padding: EdgeInsets.only(
@@ -393,13 +392,8 @@ class _LoginPageState extends State<LoginPage> {
                               right: 20,
                               bottom: MediaQuery.of(context).viewInsets.bottom),
                           child: Container(
-                            child: _button(
-                                "Iniciar",
-                                Colors.white,
-                                Colors.red,
-                                Colors.purple[300],
-                                Colors.white,
-                                _registerUser),
+                            child: _buttonEnvio("Iniciar", Colors.white,
+                                Colors.red, Colors.purple[300], Colors.white),
                             height: 50,
                             width: MediaQuery.of(context).size.width * 0.45,
                           ),
@@ -417,6 +411,40 @@ class _LoginPageState extends State<LoginPage> {
         );
       },
     );
+  }
+
+  //validar usario correo
+
+  String emailValidator(String value) {
+    Pattern pattern =
+        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+    RegExp regex = new RegExp(pattern);
+    if (value.isEmpty) return '*Requerido';
+    if (!regex.hasMatch(value))
+      return '*Ingresa un correo valido';
+    else
+      return null;
+  }
+  //validar cntraseña
+
+  String passwordValidator(String value) {
+    if (value.isEmpty) return '*Requerido';
+    if (value.length <= 6)
+      return 'Más de 6 caracteres porfavor';
+    else
+      return null;
+  }
+
+  // validar nombre
+  String nombreValidator(String value) {
+    Pattern patronNombre =
+        r'^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.-]+$';
+    RegExp regExpName = new RegExp(patronNombre);
+    if (value.isEmpty) return '*Requerido';
+    if (!regExpName.hasMatch(value))
+      return 'Nombre no es correcto';
+    else
+      return null;
   }
 
 //-------funcion registro ---
@@ -453,9 +481,6 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                             onPressed: () {
                               Navigator.of(context).pop();
-                              _emailController.clear();
-                              _passwordController.clear();
-                              _nameController.clear();
                             },
                           ),
                         ),
@@ -519,36 +544,54 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                         //..................campo nombre------
-                        Padding(
-                          padding: EdgeInsets.only(
-                            bottom: 20,
-                            top: 60,
-                          ),
-                          child: _input(Icon(Icons.account_circle), "Nombres",
-                              "Nombres", _nameController, false),
-                        ),
-                        //-------------------campo correo
-                        Padding(
-                          padding: EdgeInsets.only(
-                            bottom: 20,
-                          ),
-                          child: _input(Icon(Icons.email), "Correo", "Correo",
-                              _emailController, false),
-                        ),
-                        //---------------------campor contraseña-
-                        Padding(
-                          padding: EdgeInsets.only(
-                            bottom: 20,
-                          ),
-                          child: _input(
-                              Icon(
-                                Icons.lock,
-                              ),
-                              "Contraseña",
-                              "Contraseña",
-                              _passwordController,
-                              true),
-                        ),
+
+                        Form(
+                            key: _formKey2,
+                            autovalidate: _autoValidate,
+                            child: Column(
+                              children: [
+                                Padding(
+                                    padding:
+                                        EdgeInsets.only(bottom: 20, top: 60),
+                                    child: CustomTextField(
+                                      onchanged: (valor) {
+                                        _nombres = valor;
+                                      },
+                                      icon: Icon(Icons.account_circle),
+                                      obsecure: false,
+                                      validator: nombreValidator,
+                                      hint: "Nombres",
+                                      label: "Nombres",
+                                    )),
+                                //-------------------campo contraseña login
+                                Padding(
+                                    padding: EdgeInsets.only(bottom: 20),
+                                    child: CustomTextField(
+                                      onchanged: (valor) {
+                                        _email = valor;
+                                      },
+                                      keyboardType: TextInputType.emailAddress,
+                                      icon: Icon(Icons.email),
+                                      obsecure: false,
+                                      validator: emailValidator,
+                                      hint: "Correo",
+                                      label: "Correo",
+                                    )),
+                                Padding(
+                                    padding: EdgeInsets.only(bottom: 20),
+                                    child: CustomTextField(
+                                      onchanged: (valor) {
+                                        _password = valor;
+                                      },
+                                      icon: Icon(Icons.lock),
+                                      obsecure: true,
+                                      validator: passwordValidator,
+                                      hint: "Contraseña",
+                                      label: "Contraseña",
+                                    )),
+                              ],
+                            )),
+
                         //-----------------boton registro---
                         Padding(
                           padding: EdgeInsets.only(
@@ -556,13 +599,13 @@ class _LoginPageState extends State<LoginPage> {
                             right: 20,
                             bottom: MediaQuery.of(context).viewInsets.bottom,
                           ),
-                          child: _button(
-                              "Registrarme",
-                              Colors.white,
-                              Colors.red,
-                              Colors.purple[300],
-                              Colors.white,
-                              _registerUser),
+                          child: _buttonEnvioRegistro(
+                            "Registrarme",
+                            Colors.white,
+                            Colors.red,
+                            Colors.purple[300],
+                            Colors.white,
+                          ),
                         ),
                         SizedBox(
                           height: 20,
@@ -599,4 +642,69 @@ class BottomWaveClipper extends CustomClipper<Path> {
 
   @override
   bool shouldReclip(CustomClipper<Path> oldClipper) => false;
+}
+
+//........clase customtextfiel
+
+class CustomTextField extends StatelessWidget {
+  final FormFieldSetter<String> onchanged;
+  final Icon icon;
+  final String hint;
+  final String label;
+  final bool obsecure;
+  final FormFieldValidator<String> validator;
+  final TextInputType keyboardType;
+
+  CustomTextField(
+      {this.onchanged,
+      this.label,
+      this.icon,
+      this.hint,
+      this.obsecure = false,
+      this.validator,
+      this.keyboardType});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.only(left: 20, right: 20),
+      child: TextFormField(
+        onChanged: onchanged,
+        keyboardType: keyboardType,
+        validator: validator,
+        obscureText: obsecure,
+        style: TextStyle(
+          fontSize: 20,
+        ),
+        decoration: InputDecoration(
+            labelStyle: TextStyle(
+              fontSize: 25,
+            ),
+            hintStyle: TextStyle(fontSize: 20),
+            labelText: label,
+            hintText: hint,
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(30),
+              borderSide: BorderSide(
+                color: Theme.of(context).primaryColor,
+                width: 2,
+              ),
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(30),
+              borderSide: BorderSide(
+                color: Theme.of(context).primaryColor,
+                width: 3,
+              ),
+            ),
+            prefixIcon: Padding(
+              child: IconTheme(
+                data: IconThemeData(color: Theme.of(context).primaryColor),
+                child: icon,
+              ),
+              padding: EdgeInsets.only(left: 30, right: 10),
+            )),
+      ),
+    );
+  }
 }
