@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:MedicPlant/pages/splash.dart';
 import 'package:firebase_core/firebase_core.dart';
 
+import 'pages/menu.dart';
+
 
 
 void main() async {
@@ -23,11 +25,16 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'hola como estas',
-      home: Splashscreen(),
+      initialRoute: '/',
       theme: ThemeData(
         primaryColor: Color(0xFF06B7A2),
         canvasColor: Colors.transparent,
       ),
+
+      routes: {
+        '/' :(context,)=>Splashscreen(),
+        'menu': (context)=>MenuScreen(),
+      },
         
     );
   }

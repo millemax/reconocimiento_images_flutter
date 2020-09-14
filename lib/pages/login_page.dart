@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -215,9 +216,11 @@ class _LoginPageState extends State<LoginPage> {
       ),
       onPressed: () {
         if (_formKey1.currentState.validate()) {
-          Navigator.pushReplacementNamed(context, 'menu');
-          print('Email: $_email');
-          print('Password: $_password');
+          FirebaseAuth.instance.signInWithEmailAndPassword(email: _email, password: _password).then((value){
+              Navigator.pushReplacementNamed(context, 'menu');
+         
+          });
+          
         }
       },
     );
@@ -245,10 +248,64 @@ class _LoginPageState extends State<LoginPage> {
       ),
       onPressed: () {
         if (_formKey2.currentState.validate()) {
-          Navigator.pushReplacementNamed(context, 'menu');
-          print('Email: $_nombres');
-          print('Email: $_email');
-          print('Password: $_password');
+          print(_nombres);
+          FirebaseAuth.instance.createUserWithEmailAndPassword(email:_email, password:_password).then((value){
+                  final String id = FirebaseAuth.instance.currentUser.uid;
+                  FirebaseFirestore.instance.collection('users').doc(id).set({
+                    'correo':_email,
+                    'nombre':_nombres,
+                    
+                  }).then((value){
+                     Navigator.pushReplacementNamed(context, 'menu');
+                     /* showDialog(
+                       context: context,
+                       barrierDismissible: false,
+                       builder: (BuildContext context){
+                         AlertDialog(
+                            title:Text('Ya estas Registrado!'),
+                            content: SingleChildScrollView(
+                              child: ListBody(
+                                children: [
+                                  Text('ya eres parte de medic plant'),
+                                  Text('gracias por registrarte'),
+                                ],
+                              ) ,
+                              ),
+                            actions: [
+                              FlatButton(
+                                onPressed: (){
+                                    Navigator.pushReplacementNamed(context, 'menu');
+                                },
+                                child: Text('ok'))
+                            ],
+
+                       );
+
+                       }
+                       
+                     );
+                  */
+
+                  })
+                  .catchError((error){
+                    //error al cargar los datos a firestore
+                    
+
+                    
+
+                  });
+
+
+
+                      
+
+          })
+          .catchError((error){
+
+            //error en crear usuario
+
+          });
+          
         }
       },
     );
