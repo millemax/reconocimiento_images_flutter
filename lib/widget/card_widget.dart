@@ -28,7 +28,7 @@ class CardWidget extends StatelessWidget {
         width: 175,
         height: 240,
         child: Container(
-          margin: EdgeInsets.only(left: 10),
+          margin: EdgeInsets.only(left: 5),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(30),
             boxShadow: <BoxShadow>[

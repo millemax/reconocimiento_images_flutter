@@ -11,9 +11,18 @@ class _PlantasState extends State<Plantas> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Text('soy la planta'),
-      ),
+      body: Column(
+        children: [
+          Row(
+            
+
+          ),
+
+
+        ],
+
+      ), 
+      
        
     );
   }
