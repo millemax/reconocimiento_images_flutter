@@ -34,9 +34,9 @@ dependencies:
   firebase_auth: ^0.18.0+1
   cloud_firestore: ^0.14.0+2
   
-
-  
-
+  tuple: ^1.0.3
+  extended_nested_scroll_view: ^1.0.1
+ 
 
 
   # The following adds the Cupertino Icons font to your application.

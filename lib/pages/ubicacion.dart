@@ -14,14 +14,10 @@ class _UbicacionState extends State<Ubicacion> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: GoogleMap(
-        initialCameraPosition: CameraPosition(
-        target: LatLng(-13.6564672,-73.3826469),
-        zoom:12,
-         )
-        ),
-
-
-       
+          initialCameraPosition: CameraPosition(
+        target: LatLng(-13.6564672, -73.3826469),
+        zoom: 12,
+      )),
     );
   }
 }

@@ -1,6 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
+import 'olvidoContraseña.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -18,6 +21,14 @@ class _LoginPageState extends State<LoginPage> {
   String _nombres;
   String _password;
   bool _autoValidate = false;
+
+  //----------------metodo par ir ala pagina recuperar conrsña---
+  void pushRoute(BuildContext context) {
+    Navigator.push(
+      context,
+      CupertinoPageRoute(builder: (BuildContext context) => OlvidoContrasena()),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -428,7 +439,7 @@ class _LoginPageState extends State<LoginPage> {
                                     )),
                                 //-------------------campo contraseña login
                                 Padding(
-                                    padding: EdgeInsets.only(bottom: 20),
+                                    padding: EdgeInsets.only(bottom: 15),
                                     child: CustomTextField(
                                       onchanged: (valor) {
                                         _password = valor;
@@ -441,6 +452,26 @@ class _LoginPageState extends State<LoginPage> {
                                     )),
                               ],
                             )),
+                       
+                        //------------olvido su contraseña-----
+
+                        Container(
+                          width: double.infinity,
+                          alignment: Alignment.centerRight,
+                          child: GestureDetector(
+                            child: Padding(
+                              padding: EdgeInsets.only(right: 26, bottom: 15),
+                              child: Text(
+                                "¿Olvido su contraseña?",
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  color: Colors.purple[300],
+                                ),
+                              ),
+                            ),
+                            onTap: () => pushRoute(context),
+                          ),
+                        ),
 
                         //----------------boton registro en vista login---
                         Padding(

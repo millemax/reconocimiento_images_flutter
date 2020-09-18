@@ -5,9 +5,10 @@ import 'package:MedicPlant/pages/login_page.dart';
 //import 'package:MedicPlant/pages/menu.dart';
 //import 'package:MedicPlant/pages/menu.dart';
 import 'package:flutter/material.dart';
+
+
+
 //import 'login_page.dart';
-
-
 
 class Splashscreen extends StatefulWidget {
   Splashscreen({Key key}) : super(key: key);
@@ -22,8 +23,8 @@ class _SplashscreenState extends State<Splashscreen> {
     super.initState();
     Timer(Duration(seconds:8), ()=> Navigator.push(context,MaterialPageRoute(builder:(context)=> LoginPage())));
     //Timer(Duration(seconds:8), ()=> Navigator.push(context,MaterialPageRoute(builder:(context)=> DetectScreen())));
-        
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,14 +44,7 @@ class _SplashscreenState extends State<Splashscreen> {
             ),
           ),
         ),
-      
-
-
-      
-
-       
-    );
+      );
+    
   }
 }
-
-
