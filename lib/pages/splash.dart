@@ -1,9 +1,11 @@
 import 'dart:async';
 //import 'package:MedicPlant/pages/detect_screen.dart';
-import 'package:MedicPlant/pages/menu.dart';
+/* import 'package:MedicPlant/pages/menu.dart'; */
+import 'package:MedicPlant/pages/login_page.dart';
 import 'package:flutter/material.dart';
 
-import 'login_page.dart';
+import 'Aboutplantas/aboutPlantas_page.dart';
+
 //import 'login_page.dart';
 
 class Splashscreen extends StatefulWidget {
@@ -19,8 +21,8 @@ class _SplashscreenState extends State<Splashscreen> {
     super.initState();
     Timer(
         Duration(seconds: 8),
-        () => Navigator.push(
-            context, MaterialPageRoute(builder: (context) => LoginPage())));
+        () => Navigator.push(context,
+            MaterialPageRoute(builder: (context) => AcercadePlantas())));
     //Timer(Duration(seconds:8), ()=> Navigator.push(context,MaterialPageRoute(builder:(context)=> DetectScreen())));
   }
 

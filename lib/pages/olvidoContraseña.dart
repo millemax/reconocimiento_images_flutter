@@ -29,11 +29,11 @@ class _OlvidoContrasenaState extends State<OlvidoContrasena> {
                   child: Column(
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(right: 50, top: 50),
+                        padding: EdgeInsets.only(right: 50, top: 100),
                         child: Text(
                           "Bienvenido",
                           style: TextStyle(
-                              fontSize: 44,
+                              fontSize: 12,
                               fontWeight: FontWeight.bold,
                               color: Colors.purple[300]),
                         ),
@@ -43,7 +43,7 @@ class _OlvidoContrasenaState extends State<OlvidoContrasena> {
                         child: Text(
                           "De Nuevo !!!",
                           style: TextStyle(
-                              fontSize: 44,
+                              fontSize: 12,
                               fontWeight: FontWeight.bold,
                               color: Colors.purple[300]),
                         ),

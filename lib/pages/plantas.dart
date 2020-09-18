@@ -11,10 +11,10 @@ class _PlantasState extends State<Plantas> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.purple[100],
       body: Center(
         child: Text('soy la planta'),
       ),
-       
     );
   }
 }
