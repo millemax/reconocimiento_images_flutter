@@ -124,6 +124,10 @@ class _AcercadePlantasState extends State<AcercadePlantas>
                                           style: TextStyle(fontSize: 14.0),
                                           textAlign: TextAlign.left,
                                         ),
+                                        /* Padding(
+                                          padding: EdgeInsets.only(left: 10),
+                                          child: Text("Ver planta en mapa"),
+                                        ) */
                                       ],
                                     ),
                                     SizedBox(
@@ -145,27 +149,34 @@ class _AcercadePlantasState extends State<AcercadePlantas>
                                           style: TextStyle(fontSize: 14.0),
                                           textAlign: TextAlign.left,
                                         ),
+                                        /* Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 1.0),
+                                          child: Image.asset(
+                                            "assets/images/mapalocation.png",
+                                            scale: 7,
+                                          ),
+                                        ), */
                                       ],
                                     )
                                   ],
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.only(left: 10),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: <Widget>[
-                                    Text("Ver planta en mapa"),
+                                padding: const EdgeInsets.only(left: 30.0),
+                                child: Column(
+                                  children: [
+                                    Text("Ver planta"),
                                     Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 1.0),
-                                        child: Image.asset(
-                                          "assets/images/mapalocation.png",
-                                          scale: 7,
-                                        )),
+                                      padding: const EdgeInsets.only(left: 1.0),
+                                      child: Image.asset(
+                                        "assets/images/mapalocation.png",
+                                        scale: 7,
+                                      ),
+                                    ),
                                   ],
                                 ),
-                              )
+                              ),
                             ],
                           ),
                           //-----------widget texto / icon  ver en mapa
@@ -222,13 +233,13 @@ class _AcercadePlantasState extends State<AcercadePlantas>
 //                  color: Colors.red, //change your color here
 //                ),
                     automaticallyImplyLeading: false,
-                    leading: GestureDetector(
+                    /* leading: GestureDetector(
                       onTap: () {},
                       child: Icon(
                         Icons.arrow_back,
                         color: Colors.white,
                       ),
-                    ),
+                    ), */
 
                     elevation: 0,
                     title: Text(

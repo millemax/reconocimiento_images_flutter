@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:tflite/tflite.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:geocoder/geocoder.dart';
 
 
 //esta es la pagina donde se muestra la imagen recortada y ejecuta la red neuronal
@@ -135,13 +136,37 @@ class _ResultPageState extends State<ResultPage> {
     
     );
   }
-
-  getPosition()async {
+ //funcion para obtener mi posicion
+ getPosition()async {
     Position position = await getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
     print(position);
+    getAdress();
 
 
   }
+
+//funcion para obtener la fecha y hora
+ getDatatime(){
+   final fecha= DateTime.now();
+   print('la fecha');
+   
+ }
+
+
+//funcion para obtener el lugar
+ getAdress() async {
+   final coordinates= new Coordinates(-13.6564672, -73.3826469);
+
+   var direcciones= await Geocoder.local.findAddressesFromCoordinates(coordinates);
+   
+   print(direcciones.first.featureName);
+   print(direcciones.first.addressLine);
+
+
+
+ }
+
+
 
   //funcion que carga el modelo tflite
   loadModel() async {

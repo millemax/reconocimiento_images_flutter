@@ -103,100 +103,99 @@ class _MenuScreenState extends State<MenuScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: Text('Medic Plant', style: TextStyle(color: Colors.white)),
-      ),
-      body: PageView(
-        controller: _pageController,
-        children: [
-          Container(child: MyHome()),
-          Container(child: Ubicacion()),
-          Container(child: Plantas()),
-          Container(child: Perfil()),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Color(0xFF06B7A2),
-        onPressed: () {
-          _mostrarAlert();
-         
-        },
-        child: Icon(Icons.camera, size: 35),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: BottomAppBar(
-        color: Color(0xFF06B7A2),
-        shape: CircularNotchedRectangle(),
-        child: Container(
-          height: 80,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 30,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  children: [
-                    IconButton(
-                        icon: Icon(Icons.home, color: Colors.white, size: 40),
-                        onPressed: () {
-                          if (_pageController.hasClients) {
-                            _pageController.animateToPage(0,
-                                duration: Duration(milliseconds: 500),
-                                curve: Curves.decelerate);
-                          }
-                        }),
-                    Text('  Home', style: TextStyle(color: Colors.white)),
-                  ],
-                ),
-                Column(
-                  children: [
-                    IconButton(
-                        icon: Icon(Icons.add_location,
-                            color: Colors.white, size: 40),
-                        onPressed: () {
-                          if (_pageController.hasClients) {
-                            _pageController.animateToPage(1,
-                                duration: Duration(milliseconds: 500),
-                                curve: Curves.decelerate);
-                          }
-                        }),
-                    Text('  Ubicacion', style: TextStyle(color: Colors.white)),
-                  ],
-                ),
-                SizedBox.shrink(),
-                Column(
-                  children: [
-                    IconButton(
-                        icon: Icon(Icons.spa, color: Colors.white, size: 40),
-                        onPressed: () {
-                          if (_pageController.hasClients) {
-                            _pageController.animateToPage(2,
-                                duration: Duration(milliseconds: 500),
-                                curve: Curves.decelerate);
-                          }
-                        }),
-                    Text('  Plantas', style: TextStyle(color: Colors.white)),
-                  ],
-                ),
-                Column(
-                  children: [
-                    IconButton(
-                        icon: Icon(Icons.person, color: Colors.white, size: 40),
-                        onPressed: () {
-                          if (_pageController.hasClients) {
-                            _pageController.animateToPage(3,
-                                duration: Duration(milliseconds: 500),
-                                curve: Curves.decelerate);
-                          }
-                        }),
-                    Text('  Perfil', style: TextStyle(color: Colors.white)),
-                  ],
-                ),
-              ],
+    return SafeArea(
+          child: Scaffold(
+        backgroundColor: Colors.white,
+        body: PageView(
+          controller: _pageController,
+          children: [
+            Container(child: MyHome()),
+            Container(child: Ubicacion()),
+            Container(child: Plantas()),
+            Container(child: Perfil()),
+          ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: Color(0xFF06B7A2),
+          onPressed: () {
+            _mostrarAlert();
+           
+          },
+          child: Icon(Icons.camera, size: 35),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        bottomNavigationBar: BottomAppBar(
+          color: Color(0xFF06B7A2),
+          shape: CircularNotchedRectangle(),
+          child: Container(
+            height: 80,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 30,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    children: [
+                      IconButton(
+                          icon: Icon(Icons.home, color: Colors.white, size: 40),
+                          onPressed: () {
+                            if (_pageController.hasClients) {
+                              _pageController.animateToPage(0,
+                                  duration: Duration(milliseconds: 500),
+                                  curve: Curves.decelerate);
+                            }
+                          }),
+                      Text('  Home', style: TextStyle(color: Colors.white)),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      IconButton(
+                          icon: Icon(Icons.add_location,
+                              color: Colors.white, size: 40),
+                          onPressed: () {
+                            if (_pageController.hasClients) {
+                              _pageController.animateToPage(1,
+                                  duration: Duration(milliseconds: 500),
+                                  curve: Curves.decelerate);
+                            }
+                          }),
+                      Text('  Ubicacion', style: TextStyle(color: Colors.white)),
+                    ],
+                  ),
+                  SizedBox.shrink(),
+                  Column(
+                    children: [
+                      IconButton(
+                          icon: Icon(Icons.spa, color: Colors.white, size: 40),
+                          onPressed: () {
+                            if (_pageController.hasClients) {
+                              _pageController.animateToPage(2,
+                                  duration: Duration(milliseconds: 500),
+                                  curve: Curves.decelerate);
+                            }
+                          }),
+                      Text('  Plantas', style: TextStyle(color: Colors.white)),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      IconButton(
+                          icon: Icon(Icons.person, color: Colors.white, size: 40),
+                          onPressed: () {
+                            if (_pageController.hasClients) {
+                              _pageController.animateToPage(3,
+                                  duration: Duration(milliseconds: 500),
+                                  curve: Curves.decelerate);
+                            }
+                          }),
+                      Text('  Perfil', style: TextStyle(color: Colors.white)),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),
