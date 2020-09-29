@@ -151,7 +151,7 @@ class _AcercadePlantasState extends State<AcercadePlantas>
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.only(left: 40),
+                                padding: const EdgeInsets.only(left: 10),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: <Widget>[

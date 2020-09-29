@@ -1,3 +1,4 @@
+import 'package:MedicPlant/pages/Aboutplantas/aboutPlantas_page.dart';
 import 'package:MedicPlant/pages/camera_page.dart';
 import 'package:MedicPlant/pages/result_page.dart';
 import 'package:camera/camera.dart';
@@ -27,7 +28,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'hola como estas',
+      title: 'Medic Plant',
       initialRoute: '/',
       theme: ThemeData(
         primaryColor: Color(0xFF06B7A2),
@@ -40,6 +41,7 @@ class _MyAppState extends State<MyApp> {
         'camerapage': (context) => CameraPage(
               cameras: cameras,
             ),
+        'about':(context) => AcercadePlantas(),
       },
     );
   }
