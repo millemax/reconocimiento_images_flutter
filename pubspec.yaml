@@ -36,7 +36,8 @@ dependencies:
   
   tuple: ^1.0.3
   extended_nested_scroll_view: ^1.0.1
- 
+  #flutter notificaion toast
+  fluttertoast: ^7.1.1
 
 
   # The following adds the Cupertino Icons font to your application.
