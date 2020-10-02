@@ -2,8 +2,11 @@
 import 'package:MedicPlant/pages/home.dart';
 import 'package:MedicPlant/pages/perfil.dart';
 import 'package:MedicPlant/pages/plantas.dart';
+
 import 'package:MedicPlant/pages/ubicacion.dart';
 import 'package:flutter/material.dart';
+
+import 'Aboutplantas/prueba.dart';
 //import 'package:image_picker/image_picker.dart';
 
 class MenuScreen extends StatefulWidget {
@@ -34,7 +37,7 @@ class _MenuScreenState extends State<MenuScreen> {
         children: [
           Container(child: MyHome()),
           Container(child: Ubicacion()),
-          Container(child: Plantas()),
+          Container(child: BusquedaPlantas()),
           Container(child: Perfil()),
         ],
       ),
