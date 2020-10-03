@@ -31,7 +31,7 @@ class _MyHomeState extends State<MyHome> {
                 ),
               ),
               SizedBox(
-                height:10,
+                height:5,
               ),
               Container(
                 child: Image.asset('assets/images/instrucciones.png'),

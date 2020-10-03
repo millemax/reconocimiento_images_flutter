@@ -1,4 +1,7 @@
+import 'package:MedicPlant/pages/Aboutplantas/aboutPlantas_page.dart';
 import 'package:MedicPlant/pages/camera_page.dart';
+import 'package:MedicPlant/pages/login_page.dart';
+
 import 'package:MedicPlant/pages/result_page.dart';
 import 'package:MedicPlant/pages/thema.dart';
 import 'package:camera/camera.dart';
@@ -28,30 +31,14 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => ThemeChanger(
-        ThemeData(
-          brightness: Brightness.light,
-          primaryColor: Color(0xFF06B7A2),
-          backgroundColor: Colors.white,
-        ),
-      ),
-      child: MaterialWithTheme(),
-    );
-  }
-}
-
-class MaterialWithTheme extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    //---
-    final theme = Provider.of<ThemeChanger>(context);
-
     return MaterialApp(
-      theme: theme.getTheme(),
       debugShowCheckedModeBanner: false,
-      title: 'hola como estas',
+      title: 'Medic Plant',
       initialRoute: '/',
+      theme: ThemeData(
+        primaryColor: Color(0xFF06B7A2),
+        canvasColor: Colors.transparent,
+      ),
       routes: {
         '/': (context) => Splashscreen(),
         'menu': (context) => MenuScreen(),
@@ -59,6 +46,8 @@ class MaterialWithTheme extends StatelessWidget {
         'camerapage': (context) => CameraPage(
               cameras: cameras,
             ),
+        'about': (context) => AcercadePlantas(),
+        'login': (context) => LoginPage(),
       },
     );
   }

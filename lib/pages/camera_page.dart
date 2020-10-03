@@ -5,6 +5,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 
 import 'package:image_picker/image_picker.dart';
+import 'package:image_cropper/image_cropper.dart';
 
 class CameraPage extends StatefulWidget {
   final List<CameraDescription> cameras;
@@ -18,13 +19,68 @@ class _CameraPageState extends State<CameraPage> {
   final picker = ImagePicker();
   CameraController _cameraController;
 
-  Future getImage() async {
+// la funcion para obtener la camara
+Future getImage() async {
     final pickedFile = await picker.getImage(source: ImageSource.camera);
 
     setState(() {
       _image = File(pickedFile.path);
     });
   }
+
+// funcion para poder obtener de galeria de la camara
+Future getGallery() async{
+
+  final pickedFile = await picker.getImage(source: ImageSource.gallery);  
+  setState(() {
+    _image= File(pickedFile.path);
+  });
+}
+
+//funcion que llama para recortar la imagenes
+Future _cropImage(image) async{
+  File croppedFile = await ImageCropper.cropImage(
+        sourcePath: image.path,
+        aspectRatioPresets: Platform.isAndroid
+            ? [
+                CropAspectRatioPreset.square,
+                CropAspectRatioPreset.ratio3x2,
+                CropAspectRatioPreset.original,
+                CropAspectRatioPreset.ratio4x3,
+                CropAspectRatioPreset.ratio16x9
+              ]
+            : [
+                CropAspectRatioPreset.original,
+                CropAspectRatioPreset.square,
+                CropAspectRatioPreset.ratio3x2,
+                CropAspectRatioPreset.ratio4x3,
+                CropAspectRatioPreset.ratio5x3,
+                CropAspectRatioPreset.ratio5x4,
+                CropAspectRatioPreset.ratio7x5,
+                CropAspectRatioPreset.ratio16x9
+              ],
+        androidUiSettings: AndroidUiSettings(
+            toolbarTitle: 'Cropper',
+            toolbarColor: Colors.deepOrange,
+            toolbarWidgetColor: Colors.white,
+            initAspectRatio: CropAspectRatioPreset.original,
+            lockAspectRatio: false),
+        iosUiSettings: IOSUiSettings(
+          title: 'Cropper',
+        ));
+    if (croppedFile != null) {      
+      setState(() {
+        Navigator.pushNamed(context,'resultpage', );
+        
+      });
+    }
+
+}
+
+
+
+
+
 
   @override
   void initState() {
@@ -77,9 +133,10 @@ class _CameraPageState extends State<CameraPage> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          GestureDetector(
+                          GestureDetector(  
                             onTap: () {
-                              Navigator.pushNamed(context, 'resultpage');
+                              getGallery();
+                              //Navigator.pushNamed(context, 'resultpage');
                             },
                             child: Container(
                               height: 45,
@@ -96,7 +153,9 @@ class _CameraPageState extends State<CameraPage> {
                           ),
                           GestureDetector(
                             onTap: () {
-                              Navigator.pushNamed(context, 'resultpage');
+                              // boton para tomar la foto
+                              
+                              getImage();
                             },
                             child: Padding(
                               padding: const EdgeInsets.symmetric(vertical: 20),
@@ -116,6 +175,7 @@ class _CameraPageState extends State<CameraPage> {
                           ),
                           GestureDetector(
                             onTap: () {
+                              // para activar el flash
                               Navigator.pushNamed(context, 'resultpage');
                             },
                             child: Container(
