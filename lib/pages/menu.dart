@@ -81,7 +81,7 @@ class _MenuScreenState extends State<MenuScreen> {
                 CropAspectRatioPreset.ratio16x9
               ],
         androidUiSettings: AndroidUiSettings(
-            toolbarTitle: 'Cropper',
+            toolbarTitle: 'Recortar',
             toolbarColor: Color(0xFF06B7A2),
             toolbarWidgetColor: Colors.white,
             initAspectRatio: CropAspectRatioPreset.original,

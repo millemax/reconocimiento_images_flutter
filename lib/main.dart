@@ -41,7 +41,7 @@ class _MyAppState extends State<MyApp> {
         'camerapage': (context) => CameraPage(
               cameras: cameras,
             ),
-        'about':(context) => AcercadePlantas(),
+        
       },
     );
   }

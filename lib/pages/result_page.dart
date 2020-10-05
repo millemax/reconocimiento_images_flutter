@@ -1,8 +1,14 @@
 import 'dart:io';
+import 'package:MedicPlant/pages/Aboutplantas/aboutPlantas_page.dart';
 import 'package:flutter/material.dart';
 import 'package:tflite/tflite.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoder/geocoder.dart';
+import 'package:intl/intl.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 
 
 //esta es la pagina donde se muestra la imagen recortada y ejecuta la red neuronal
@@ -16,25 +22,44 @@ class ResultPage extends StatefulWidget {
 }
 
 class _ResultPageState extends State<ResultPage> {
+  ProgressDialog progressDialog;
+
+
   //declara las variables 
   bool _isloading=false;
   File _image;
   List _outputs;
+  double _percent;
 
-  void initState() {
+  //varibles para enviar a la base de datos
+  double _latitud;
+  double _longitud;
+  String _fecha;
+  String _direccion;
+
+  
+  
+
+ 
+
+@override
+void initState() {
      _isloading = true;
-    super.initState();
-    loadModel().then((value){
+      loadModel().then((value){
       setState(() {
         _isloading = false;      
         classifyImage(_image);
       });
 
     });
+    super.initState();
+   
   }
 
   @override
   Widget build(BuildContext context) {
+
+    
 
     final  imageFile= ModalRoute.of(context).settings.arguments;
     _image= File(imageFile);
@@ -81,7 +106,7 @@ class _ResultPageState extends State<ResultPage> {
                         Row(
                            
                               children: [
-                                Text("Planta encontrada:", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)), 
+                                Text("Planta:", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)), 
                                 SizedBox(width:20),                             
                                 _outputs != null 
                               ? Text("${_outputs[0]["label"]}",
@@ -92,7 +117,7 @@ class _ResultPageState extends State<ResultPage> {
                                 
                                 ),
                               )
-                              :Container() 
+                              :Text('No puedo reconocerlo', maxLines:2),
                               ],
 
                         ),
@@ -101,11 +126,11 @@ class _ResultPageState extends State<ResultPage> {
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                           onPressed: (){
                             getPosition();
-                            Navigator.pushNamed(context, 'about');
+                            
 
                           },
                           color: Color(0xFF06B7A2),
-                          child: Text('Leer Mas', style: TextStyle(color: Colors.white)),
+                          child: Text('Guardar y leer mas', style: TextStyle(color: Colors.white)),
 
                         
                         ),
@@ -122,15 +147,7 @@ class _ResultPageState extends State<ResultPage> {
            ]
          ),
 
-       /*   floatingActionButton: FloatingActionButton(
-           onPressed:(){
-            // classifyImage(_image);
-           } ,
-
-           child: Icon(Icons.image)
-         ),
- */
-        
+     
          
        
     
@@ -140,31 +157,112 @@ class _ResultPageState extends State<ResultPage> {
  getPosition()async {
     Position position = await getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
     print(position);
-    getAdress();
+    setState(() {
+      _latitud= position.latitude;
+      _longitud= position.longitude;
+    });
+
+
+    getAdress(position.latitude, position.longitude);    
+    
 
 
   }
 
-//funcion para obtener la fecha y hora
- getDatatime(){
-   final fecha= DateTime.now();
-   print('la fecha');
-   
- }
+
 
 
 //funcion para obtener el lugar
- getAdress() async {
-   final coordinates= new Coordinates(-13.6564672, -73.3826469);
-
+ getAdress(double lat,double long) async {
+   final coordinates= new Coordinates(lat, long);
    var direcciones= await Geocoder.local.findAddressesFromCoordinates(coordinates);
    
-   print(direcciones.first.featureName);
+   // print(direcciones.first.featureName);
    print(direcciones.first.addressLine);
+
+   setState(() {
+     _direccion=direcciones.first.addressLine;
+   });
+
+   getDatatime();
+
+ }
+
+ //funcion para obtener la fecha y hora
+ getDatatime(){
+   final fecha= DateTime.now();   
+   final formateado= DateFormat().add_yMd().add_jm().format(fecha);
+   print(formateado);
+   setState(() {
+     _fecha= formateado;
+   });   
+
+   uploadImage();
+ }
+
+
+
+ //cargamos la imagen a la base de datos
+ //funcion para cargar la imagen a firestore y recuerar la url
+  uploadImage() async {
+    final StorageReference postImgRef =
+        FirebaseStorage.instance.ref().child('plantas');
+    var timeKey = DateTime.now();
+
+    //carguemos a storage
+    final StorageUploadTask uploadTask =
+        postImgRef.child(timeKey.toString() + ".png").putFile(_image);
+
+    // recuperamos la  url esperamos que termine de cargar
+    var imageUrl = await (await uploadTask.onComplete).ref.getDownloadURL();
+
+    final String url = imageUrl.toString();
+
+    saveData(url);
+  }
+
+ //funcion para cargar a la base de datos
+ saveData(url){
+   //inicializando el progressDialog
+   //el progresdialog
+    progressDialog = ProgressDialog(context,type: ProgressDialogType.Normal);
+    progressDialog.style(message: 'cargando..');
+    progressDialog.show();
+
+
+
+   final String id = FirebaseAuth.instance.currentUser.uid;
+   FirebaseFirestore.instance.collection('reportes').add({
+     'usuario': id,
+     'foto': url,
+     'latitud': _latitud,
+     'longitud': _longitud,
+     'direccion': _direccion,
+     'planta':_outputs[0]["label"],
+     'fecha':_fecha,
+
+
+     
+   }).then((value){
+      
+      //Navigator.pushNamed(context, 'about', arguments: value.id);
+      Navigator.push(context,
+       MaterialPageRoute(builder:(context)=> AcercadePlantas(value.id)));
+      progressDialog.hide();
+
+   }).catchError((error){
+     
+     print('error no se pudo cargar a la base de datos');
+     progressDialog.hide();
+
+   });
 
 
 
  }
+
+
+
 
 
 
@@ -182,7 +280,7 @@ class _ResultPageState extends State<ResultPage> {
   }
 
 
-    //clasificador de la imagen 
+  //clasificador de la imagen 
   classifyImage(image) async {
     var output= await Tflite.runModelOnImage(
       path: image.path,
@@ -192,13 +290,60 @@ class _ResultPageState extends State<ResultPage> {
       imageStd: 127.5,  
     );
     setState(() {
-      _isloading = false;
-      _outputs=output;
+      
+      _percent= output[0]["confidence"]*100;
+
+      if (_percent >=99.8) {
+        _isloading = false;
+        _outputs=output;
+
+        
+      } else {
+        alert();
+
+      }
       
     });
 
+    print(_percent);
+}
+
+//mensaje de alerta que enviara cuando no reconozca una planta 
+alert(){
+
+     showDialog(
+        context: context,
+        builder: (_) => new AlertDialog(
+              title: new Text("LO SIENTO !!"),
+              content: new Text("Todavia no estoy preparado para reconocer estas plantas!"),
+              actions: <Widget>[
+                FlatButton(
+                  child: Text('volver'),
+                  onPressed: () {
+                    setState(() {
+                        _image=null;
+                        _outputs=null;
+                        _isloading=false;
+                        _percent= null;
+                    });
+                    Navigator.pushNamed(context, 'menu');
+
+                  },
+                )
+              ],
+            ));
 
 }
+
+@override
+  void dispose() {
+    Tflite.close();
+    super.dispose();
+    _image.delete();
+    _outputs.clear();
+    
+    
+  }
 
 
 }

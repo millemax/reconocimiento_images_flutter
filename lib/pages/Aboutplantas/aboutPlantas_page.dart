@@ -1,11 +1,16 @@
 import 'package:MedicPlant/pages/Aboutplantas/detallesPlantas_page.dart';
+import 'package:MedicPlant/pages/Aboutplantas/mapsubicacion.dart';
 import 'package:flutter/material.dart';
 import 'package:MedicPlant/pages/Aboutplantas/informacionPlanta_page.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AcercadePlantas extends StatefulWidget {
-  AcercadePlantas({Key key, this.title}) : super(key: key);
 
-  final String title;
+  final String id;
+
+  AcercadePlantas(this.id);
+
+
 
   @override
   _AcercadePlantasState createState() => _AcercadePlantasState();
@@ -15,20 +20,41 @@ class _AcercadePlantasState extends State<AcercadePlantas>
     with SingleTickerProviderStateMixin {
   TabController _tabController;
 
+  
+
+  // variable para construir toda la pagina
+  String _image="";
+  String _fecha="";
+  String _direccion="";
+  double _latitud;
+  double _longitud;
+  String _nombre="";
+
+  bool estado;
+
+
+
   @override
   void initState() {
     _tabController = TabController(length: 2, vsync: this);
+     estado=false;
+      getData(widget.id);
 
     super.initState();
+    
   }
 
   @override
-  Widget build(BuildContext context) {
-    // this sliver app bar is only use to hide/show the tabBar, the AppBar
-    // is invisible at all times. The to the user visible AppBar is below
+  Widget build(BuildContext context) {  
+    
     return Scaffold(
       body: SafeArea(
-        child: Stack(
+        child: estado==false? Container(
+          color: Colors.white,
+          child: Center(
+            child: CircularProgressIndicator(),
+          )
+        ): Stack(
           children: <Widget>[
             NestedScrollView(
               headerSliverBuilder:
@@ -52,8 +78,8 @@ class _AcercadePlantasState extends State<AcercadePlantas>
                                 decoration: BoxDecoration(),
                                 height: 290.0,
                                 width: double.infinity,
-                                child: Image.asset(
-                                  "assets/images/rosa.jpg",
+                                child: Image.network(
+                                  _image,
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -77,7 +103,7 @@ class _AcercadePlantasState extends State<AcercadePlantas>
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
-                                        'Business Office',
+                                        _nombre,
                                         style: TextStyle(
                                             fontSize: 22.0,
                                             color: Colors.white),
@@ -120,7 +146,7 @@ class _AcercadePlantasState extends State<AcercadePlantas>
                                           width: 5,
                                         ),
                                         Text(
-                                          '2020/09/2020 13:45 p.m',
+                                          _fecha,
                                           style: TextStyle(fontSize: 14.0),
                                           textAlign: TextAlign.left,
                                         ),
@@ -144,10 +170,14 @@ class _AcercadePlantasState extends State<AcercadePlantas>
                                         SizedBox(
                                           width: 5,
                                         ),
-                                        Text(
-                                          'Andahuaylas, Pacucha-Pacucha',
-                                          style: TextStyle(fontSize: 14.0),
-                                          textAlign: TextAlign.left,
+                                        Container(
+                                          width: 200,
+                                          child: Text(
+                                            _direccion,
+                                            maxLines: 2,
+                                            style: TextStyle(fontSize: 14.0),
+                                            textAlign: TextAlign.left,
+                                          ),
                                         ),
                                         /* Padding(
                                           padding:
@@ -169,9 +199,16 @@ class _AcercadePlantasState extends State<AcercadePlantas>
                                     Text("Ver planta"),
                                     Padding(
                                       padding: const EdgeInsets.only(left: 1.0),
-                                      child: Image.asset(
-                                        "assets/images/mapalocation.png",
-                                        scale: 7,
+                                      child: GestureDetector(
+                                            onTap: () {
+                                              Navigator.push(context,
+                                                MaterialPageRoute(builder:(context)=>MapsUbicacion(_latitud, _longitud))
+                                               );
+                                            },
+                                            child: Image.asset(
+                                          "assets/images/mapalocation.png",
+                                          scale: 7,
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -256,5 +293,29 @@ class _AcercadePlantasState extends State<AcercadePlantas>
         ),
       ),
     );
+  }
+
+
+  //funcion para obtener datos de la base de datos
+  getData(id){
+    print('el id del reporte es '+ id);
+    FirebaseFirestore.instance.collection('reportes').doc(id).get().then((DocumentSnapshot doc){
+      setState(() {
+        _image = doc.data()['foto'];
+        _nombre= doc.data()['planta'];
+        _fecha= doc.data()['fecha'];
+        _direccion= doc.data()['direccion'];
+        _latitud= doc.data()['latitud'];
+        _longitud= doc.data()['longitud'];
+        
+        estado= true;
+
+      });
+      
+    }).catchError((error){
+      print('no pudimos recuperar nada');
+    }); 
+
+
   }
 }
