@@ -225,9 +225,9 @@ void initState() {
  saveData(url){
    //inicializando el progressDialog
    //el progresdialog
-    progressDialog = ProgressDialog(context,type: ProgressDialogType.Normal);
+     progressDialog = ProgressDialog(context,type: ProgressDialogType.Normal);
     progressDialog.style(message: 'cargando..');
-    progressDialog.show();
+    progressDialog.show(); 
 
 
 
@@ -246,9 +246,12 @@ void initState() {
    }).then((value){
       
       //Navigator.pushNamed(context, 'about', arguments: value.id);
+      print('exito cargado');
+       progressDialog.hide(); 
       Navigator.push(context,
        MaterialPageRoute(builder:(context)=> AcercadePlantas(value.id)));
-      progressDialog.hide();
+
+     
 
    }).catchError((error){
      

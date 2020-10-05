@@ -1,10 +1,12 @@
-import 'package:MedicPlant/pages/Aboutplantas/aboutPlantas_page.dart';
+
 import 'package:MedicPlant/pages/camera_page.dart';
+import 'package:MedicPlant/pages/login_page.dart';
 import 'package:MedicPlant/pages/result_page.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:MedicPlant/pages/splash.dart';
 import 'package:firebase_core/firebase_core.dart';
+
 
 import 'pages/menu.dart';
 
@@ -42,6 +44,7 @@ class _MyAppState extends State<MyApp> {
               cameras: cameras,
             ),
         
+        'login': (context) => LoginPage(),
       },
     );
   }
