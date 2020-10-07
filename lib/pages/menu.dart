@@ -139,7 +139,7 @@ class _MenuScreenState extends State<MenuScreen> {
                                 curve: Curves.decelerate);
                           }
                         }),
-                    Text('  Home', style: TextStyle(color: Colors.white)),
+                    Text('Inicio', style: TextStyle(color: Colors.white)),
                   ],
                 ),
                 Column(

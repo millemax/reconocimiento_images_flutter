@@ -38,200 +38,202 @@ class _PerfilState extends State<Perfil> {
   Widget build(BuildContext context) {
     final String id = FirebaseAuth.instance.currentUser.uid;
     getCorreo(id);
-    return Scaffold(
-        floatingActionButton: Column(
-          children: [
-            Container(
-                padding: EdgeInsets.only(top: 30),
-                child: FloatingActionButton(
-                  onPressed: () {
-                    if ((controller.text.isNotEmpty &&
-                            controller.text.length >= 6) ||
-                        _image != null) {
-                      uploadImage();
-                      _changePassword(controller.text);
-                      showDialogChnage();
-                      controller.clear();
-                    } else {
-                      print('campo vacio');
-                    }
-                  },
-                  child: Icon(Icons.save),
-                )),
-          ],
-        ),
-        body: estado == false
-            ? Container(
-                color: Colors.white,
-                child: Center(
-                  child: CircularProgressIndicator(),
-                ),
-              )
-            : SingleChildScrollView(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: 50,
-                      width: double.infinity,
-                    ),
-                    Stack(
-                      children: [
-                        StreamBuilder(
-                            stream: FirebaseFirestore.instance
-                                .collection('users')
-                                .doc(id)
-                                .snapshots(),
-                            builder: (context, snapshot) {
-                              DocumentSnapshot data = snapshot.data;
-
-                              if (!snapshot.hasData) {
-                                return Container(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.93,
-                                  child: Center(
-                                    child: CircularProgressIndicator(),
-                                  ),
-                                );
-                              } else {
-                                return Container(
-                                    height: 150,
-                                    width: 150,
-                                    decoration: data.data()['fotoperfil'] ==
-                                            null
-                                        ? BoxDecoration(
-                                            color:
-                                                Theme.of(context).primaryColor,
-                                            borderRadius:
-                                                BorderRadius.circular(100),
-                                            image: _image == null
-                                                ? DecorationImage(
-                                                    scale: 5,
-                                                    image: AssetImage(
-                                                        'assets/images/user.png'))
-                                                : DecorationImage(
-                                                    fit: BoxFit.cover,
-                                                    image: FileImage(_image)))
-                                        : BoxDecoration(
-                                            color:
-                                                Theme.of(context).primaryColor,
-                                            borderRadius:
-                                                BorderRadius.circular(100),
-                                            image: _image == null
-                                                ? DecorationImage(
-                                                    fit: BoxFit.cover,
-                                                    image: NetworkImage(data
-                                                        .data()['fotoperfil']))
-                                                : DecorationImage(
-                                                    fit: BoxFit.cover,
-                                                    image: FileImage(_image))));
-                              }
-                            }),
-                        FloatingActionButton(
-                          onPressed: () {
-                            getImage();
-                          },
-                          child: Icon(Icons.edit),
-                        )
-                      ],
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Text(
-                      'Perfil',
-                      style:
-                          TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(
-                      height: 50,
-                      width: double.infinity,
-                    ),
-                    Card(
-                      elevation: 10,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      child: ListTile(
-                        leading: Padding(
-                            padding: EdgeInsets.only(left: 15),
-                            child: Icon(Icons.email)),
-                        title: Title(color: Colors.black, child: Text(_correo)),
+    return SafeArea(
+          child: Scaffold(
+          floatingActionButton: Column(
+            children: [
+              Container(
+                  padding: EdgeInsets.only(top: 30),
+                  child: FloatingActionButton(
+                    onPressed: () {
+                      if ((controller.text.isNotEmpty &&
+                              controller.text.length >= 6) ||
+                          _image != null) {
+                        uploadImage();
+                        _changePassword(controller.text);
+                        showDialogChnage();
+                        controller.clear();
+                      } else {
+                        print('campo vacio');
+                      }
+                    },
+                    child: Icon(Icons.save),
+                  )),
+            ],
+          ),
+          body: estado == false
+              ? Container(
+                  color: Colors.white,
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                )
+              : SingleChildScrollView(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 50,
+                        width: double.infinity,
                       ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                      width: double.infinity,
-                    ),
-                    Card(
-                        elevation: 10,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                        child: ExpansionTile(
-                          title: ListTile(
-                            leading: Icon(Icons.lock),
-                            title: Title(
-                                color: Colors.black, child: Text('Contraseña')),
-                            trailing: Icon(Icons.edit),
-                          ),
-                          children: [
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 30, vertical: 15),
-                              child: TextFormField(
-                                controller: controller,
-                                decoration: InputDecoration(
-                                  hintText: 'Contraseña mayor a 6 carácteres',
-                                  labelStyle: TextStyle(
-                                    fontSize: 25,
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(30),
-                                    borderSide: BorderSide(
-                                      color: Theme.of(context).primaryColor,
-                                      width: 2,
+                      Stack(
+                        children: [
+                          StreamBuilder(
+                              stream: FirebaseFirestore.instance
+                                  .collection('users')
+                                  .doc(id)
+                                  .snapshots(),
+                              builder: (context, snapshot) {
+                                DocumentSnapshot data = snapshot.data;
+
+                                if (!snapshot.hasData) {
+                                  return Container(
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.93,
+                                    child: Center(
+                                      child: CircularProgressIndicator(),
                                     ),
-                                  ),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(30),
-                                    borderSide: BorderSide(
-                                      color: Theme.of(context).primaryColor,
-                                      width: 3,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: 10),
-                          ],
-                        )),
-                    SizedBox(height: 10),
-                    GestureDetector(
-                      onTap: () {
-                        FirebaseAuth.instance.signOut().then((value) {
-                          SystemNavigator.pop();
-                        }).catchError((value) {
-                          print('error en cerrar sesion');
-                        });
-                      },
-                      child: Card(
+                                  );
+                                } else {
+                                  return Container(
+                                      height: 150,
+                                      width: 150,
+                                      decoration: data.data()['fotoperfil'] ==
+                                              null
+                                          ? BoxDecoration(
+                                              color:
+                                                  Theme.of(context).primaryColor,
+                                              borderRadius:
+                                                  BorderRadius.circular(100),
+                                              image: _image == null
+                                                  ? DecorationImage(
+                                                      scale: 5,
+                                                      image: AssetImage(
+                                                          'assets/images/user.png'))
+                                                  : DecorationImage(
+                                                      fit: BoxFit.cover,
+                                                      image: FileImage(_image)))
+                                          : BoxDecoration(
+                                              color:
+                                                  Theme.of(context).primaryColor,
+                                              borderRadius:
+                                                  BorderRadius.circular(100),
+                                              image: _image == null
+                                                  ? DecorationImage(
+                                                      fit: BoxFit.cover,
+                                                      image: NetworkImage(data
+                                                          .data()['fotoperfil']))
+                                                  : DecorationImage(
+                                                      fit: BoxFit.cover,
+                                                      image: FileImage(_image))));
+                                }
+                              }),
+                          FloatingActionButton(
+                            onPressed: () {
+                              getImage();
+                            },
+                            child: Icon(Icons.edit),
+                          )
+                        ],
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Text(
+                        'Perfil',
+                        style:
+                            TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                        height: 50,
+                        width: double.infinity,
+                      ),
+                      Card(
                         elevation: 10,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10)),
                         child: ListTile(
                           leading: Padding(
-                            padding: EdgeInsets.only(left: 15),
-                            child: Icon(Icons.exit_to_app),
-                          ),
-                          title: Title(
-                              color: Colors.black,
-                              child: Text('Cerrar Sesión')),
+                              padding: EdgeInsets.only(left: 15),
+                              child: Icon(Icons.email)),
+                          title: Title(color: Colors.black, child: Text(_correo)),
                         ),
                       ),
-                    ),
-                    SizedBox(height: 100),
-                  ],
-                ),
-              ));
+                      SizedBox(
+                        height: 20,
+                        width: double.infinity,
+                      ),
+                      Card(
+                          elevation: 10,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          child: ExpansionTile(
+                            title: ListTile(
+                              leading: Icon(Icons.lock),
+                              title: Title(
+                                  color: Colors.black, child: Text('Contraseña')),
+                              trailing: Icon(Icons.edit),
+                            ),
+                            children: [
+                              Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 30, vertical: 15),
+                                child: TextFormField(
+                                  controller: controller,
+                                  decoration: InputDecoration(
+                                    hintText: 'Contraseña mayor a 6 carácteres',
+                                    labelStyle: TextStyle(
+                                      fontSize: 25,
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(30),
+                                      borderSide: BorderSide(
+                                        color: Theme.of(context).primaryColor,
+                                        width: 2,
+                                      ),
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(30),
+                                      borderSide: BorderSide(
+                                        color: Theme.of(context).primaryColor,
+                                        width: 3,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(height: 10),
+                            ],
+                          )),
+                      SizedBox(height: 10),
+                      GestureDetector(
+                        onTap: () {
+                          FirebaseAuth.instance.signOut().then((value) {
+                            SystemNavigator.pop();
+                          }).catchError((value) {
+                            print('error en cerrar sesion');
+                          });
+                        },
+                        child: Card(
+                          elevation: 10,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          child: ListTile(
+                            leading: Padding(
+                              padding: EdgeInsets.only(left: 15),
+                              child: Icon(Icons.exit_to_app),
+                            ),
+                            title: Title(
+                                color: Colors.black,
+                                child: Text('Cerrar Sesión')),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 100),
+                    ],
+                  ),
+                )),
+    );
   }
 
   //funcion para cargar la imagen a firestore y recuerar la url
