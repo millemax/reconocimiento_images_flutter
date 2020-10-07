@@ -1,55 +1,43 @@
-import 'package:MedicPlant/pages/Aboutplantas/mapsubicacion.dart';
-import 'package:flutter/material.dart';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class AcercadePlantas extends StatefulWidget {
-  final String id;
+import 'package:flutter/material.dart';
 
-  AcercadePlantas(this.id);
-
+class DescripcionPlanta extends StatefulWidget {
   @override
-  _AcercadePlantasState createState() => _AcercadePlantasState();
+  _DescripcionPlantaState createState() => _DescripcionPlantaState();
 }
 
-class _AcercadePlantasState extends State<AcercadePlantas>
+class _DescripcionPlantaState extends State<DescripcionPlanta>
     with SingleTickerProviderStateMixin {
   TabController _tabController;
 
   // variable para construir toda la pagina
-  String _image = "";
-  String _fecha = "";
-  String _direccion = "";
-  double _latitud;
-  double _longitud;
-  String _nombre = "";
-
-  bool estado;
-  var infoRecuperado = [];
 
   @override
   void initState() {
     _tabController = TabController(length: 2, vsync: this);
-    estado = false;
-    getData(widget.id);
 
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    //---recibiendo parametros de home
+    final id = ModalRoute.of(context).settings.arguments;
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: estado == false
-            ? Container(
-                color: Colors.white,
-                child: Center(
-                  child: CircularProgressIndicator(),
-                ))
-            : Stack(
-                children: <Widget>[
-                  NestedScrollView(
+        child: Stack(
+          children: <Widget>[
+            StreamBuilder<Object>(
+                stream: FirebaseFirestore.instance
+                    .collection('plantas')
+                    .doc(id)
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  DocumentSnapshot data = snapshot.data;
+                  return NestedScrollView(
                     headerSliverBuilder:
                         (BuildContext context, bool innerBoxIsScrolled) {
                       return <Widget>[
@@ -72,14 +60,14 @@ class _AcercadePlantasState extends State<AcercadePlantas>
                                       height: 290.0,
                                       width: double.infinity,
                                       child: Image.network(
-                                        _image,
+                                        data.data()['image'],
                                         fit: BoxFit.cover,
                                       ),
                                     ),
                                     //----------contenedor redondeado y texto
                                     Padding(
                                       padding: const EdgeInsets.only(
-                                          left: 20.0, top: 265, bottom: 10),
+                                          left: 20.0, top: 270, bottom: 10),
                                       child: Container(
                                         height: 50,
                                         width:
@@ -98,7 +86,7 @@ class _AcercadePlantasState extends State<AcercadePlantas>
                                               MainAxisAlignment.center,
                                           children: [
                                             Text(
-                                              _nombre,
+                                              data.data()['nombrecomun'],
                                               style: TextStyle(
                                                   fontSize: 22.0,
                                                   color: Colors.white),
@@ -110,124 +98,12 @@ class _AcercadePlantasState extends State<AcercadePlantas>
                                     ),
                                   ],
                                 ),
-                                //------------widget de informacion inicial
-                                Row(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(10.0),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            'Fecha de Publicación',
-                                            style: TextStyle(
-                                                fontSize: 18.0,
-                                                color: Theme.of(context)
-                                                    .primaryColor,
-                                                fontWeight: FontWeight.bold),
-                                            textAlign: TextAlign.left,
-                                          ),
-                                          SizedBox(
-                                            height: 10,
-                                          ),
-                                          //------hora de subida y fecha
-                                          Row(
-                                            children: [
-                                              Icon(
-                                                Icons.watch_later,
-                                                color: Theme.of(context)
-                                                    .primaryColor,
-                                                size: 16.0,
-                                              ),
-                                              SizedBox(
-                                                width: 5,
-                                              ),
-                                              Text(
-                                                _fecha,
-                                                style:
-                                                    TextStyle(fontSize: 14.0),
-                                                textAlign: TextAlign.left,
-                                              ),
-                                              /* Padding(
-                                          padding: EdgeInsets.only(left: 10),
-                                          child: Text("Ver planta en mapa"),
-                                        ) */
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: 7,
-                                          ),
-                                          //-----fecha de subida de imagen
-                                          Row(
-                                            children: [
-                                              Icon(
-                                                Icons.location_on,
-                                                color: Theme.of(context)
-                                                    .primaryColor,
-                                                size: 19.0,
-                                              ),
-                                              SizedBox(
-                                                width: 5,
-                                              ),
-                                              Container(
-                                                width: 200,
-                                                child: Text(
-                                                  _direccion,
-                                                  maxLines: 2,
-                                                  style:
-                                                      TextStyle(fontSize: 14.0),
-                                                  textAlign: TextAlign.left,
-                                                ),
-                                              ),
-                                              /* Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 1.0),
-                                          child: Image.asset(
-                                            "assets/images/mapalocation.png",
-                                            scale: 7,
-                                          ),
-                                        ), */
-                                            ],
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.only(left: 30.0),
-                                      child: Column(
-                                        children: [
-                                          Text("Ver planta"),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 1.0),
-                                            child: GestureDetector(
-                                              onTap: () {
-                                                Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            MapsUbicacion(
-                                                                _latitud,
-                                                                _longitud)));
-                                              },
-                                              child: Image.asset(
-                                                "assets/images/mapalocation.png",
-                                                scale: 7,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
+
                                 //-----------widget texto / icon  ver en mapa
                               ],
                             ),
                           ),
-                          expandedHeight: 460.0,
+                          expandedHeight: 380.0,
                           //-------PESTAÑASDENAVEGACION.----
                           bottom: TabBar(
                             indicatorColor: Colors.amber,
@@ -252,53 +128,61 @@ class _AcercadePlantasState extends State<AcercadePlantas>
                     },
                     body: TabBarView(
                       children: [
-                        informacionPlantas(infoRecuperado),
-                        detallesPlantas(infoRecuperado),
+                        informacion(data),
+                        detalles(data),
                       ],
                       controller: _tabController,
                       physics: new NeverScrollableScrollPhysics(),
                     ),
-                  ),
+                  );
+                }),
 
-                  // Here is the AppBar the user actually sees. The SliverAppBar
-                  // above will slide the TabBar underneath this one.
-                  // by using SafeArea it will.
-                  Positioned(
-                    top: 0.0,
-                    left: 0.0,
-                    right: 0.0,
-                    child: Container(
-                      child: SafeArea(
-                        top: false,
-                        child: AppBar(
-                          backgroundColor: Color.fromRGBO(0, 0, 0, 0.4),
-                          leading: GestureDetector(
-                            child: Icon(
-                              Icons.arrow_back,
-                              color: Colors.white,
-                            ),
-                            onTap: () {
-                              Navigator.pushNamed(context, 'menu');
-                            },
-                          ),
-                          elevation: 0,
-                          title: Text(
-                            "Acerca de las Plantas",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          centerTitle: true,
-                        ),
+            // Here is the AppBar the user actually sees. The SliverAppBar
+            // above will slide the TabBar underneath this one.
+            // by using SafeArea it will.
+            Positioned(
+              top: 0.0,
+              left: 0.0,
+              right: 0.0,
+              child: Container(
+                child: SafeArea(
+                  top: false,
+                  child: AppBar(
+                    backgroundColor: Color.fromRGBO(0, 0, 0, 0.4),
+
+//                iconTheme: IconThemeData(
+//                  color: Colors.red, //change your color here
+//                ),
+
+                    leading: GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Icon(
+                        Icons.arrow_back,
+                        color: Colors.white,
                       ),
                     ),
+
+                    elevation: 0,
+                    title: Text(
+                      "Acerca de las Plantas",
+                      style: TextStyle(color: Colors.white),
+                    ),
+
+                    centerTitle: true,
                   ),
-                ],
+                ),
               ),
+            ),
+          ],
+        ),
       ),
     );
   }
 
-  //-----------------------------INFORMACION GENERAL ---------
-  Widget informacionPlantas(List info) {
+//-----------------------------INFORMACION GENERAL ---------
+  Widget informacion(data) {
     return ListView(
       children: [
         Padding(
@@ -360,7 +244,7 @@ class _AcercadePlantasState extends State<AcercadePlantas>
                             width: 15,
                           ),
                           Text(
-                            info[0]['partesutilizables'],
+                            data.data()['partesutilizables'],
                             textAlign: TextAlign.justify,
                             style: TextStyle(fontSize: 17, wordSpacing: 2),
                           ),
@@ -407,7 +291,7 @@ class _AcercadePlantasState extends State<AcercadePlantas>
                             ],
                           ),
                           Text(
-                            info[0]['usomedicinal'],
+                            data.data()['usomedicinal'],
                             textAlign: TextAlign.justify,
                             style: TextStyle(fontSize: 17, wordSpacing: 2),
                           ),
@@ -453,7 +337,7 @@ class _AcercadePlantasState extends State<AcercadePlantas>
                             ],
                           ),
                           Text(
-                            info[0]['dosis'],
+                            data.data()['dosis'],
                             style: TextStyle(fontSize: 17, wordSpacing: 2),
                           ),
                         ],
@@ -499,7 +383,7 @@ class _AcercadePlantasState extends State<AcercadePlantas>
                             ],
                           ),
                           Text(
-                            info[0]['contraindicacion'],
+                            data.data()['contraindicacion'],
                             style: TextStyle(fontSize: 17, wordSpacing: 2),
                           ),
                         ],
@@ -539,7 +423,7 @@ class _AcercadePlantasState extends State<AcercadePlantas>
                             width: 15,
                           ),
                           Text(
-                            info[0]['planta'],
+                            data.data()['planta'],
                             style: TextStyle(fontSize: 17, wordSpacing: 2),
                           ),
                         ],
@@ -556,7 +440,7 @@ class _AcercadePlantasState extends State<AcercadePlantas>
   }
 
 //-----------------------------DETALLES GENERALL-------------------
-  Widget detallesPlantas(List detail) {
+  Widget detalles(data) {
     return ListView(
       children: [
         Padding(
@@ -619,7 +503,7 @@ class _AcercadePlantasState extends State<AcercadePlantas>
                             width: 15,
                           ),
                           Text(
-                            detail[0]['familia'],
+                            data.data()['familia'],
                             style: TextStyle(fontSize: 17, wordSpacing: 2),
                           ),
                         ],
@@ -656,7 +540,7 @@ class _AcercadePlantasState extends State<AcercadePlantas>
                             width: 15,
                           ),
                           Text(
-                            detail[0]['genero'],
+                            data.data()['genero'],
                             style: TextStyle(fontSize: 17, wordSpacing: 2),
                           ),
                         ],
@@ -694,7 +578,7 @@ class _AcercadePlantasState extends State<AcercadePlantas>
                             width: 15,
                           ),
                           Text(
-                            detail[0]['especie'],
+                            data.data()['especie'],
                             style: TextStyle(fontSize: 17, wordSpacing: 2),
                           ),
                         ],
@@ -745,7 +629,7 @@ class _AcercadePlantasState extends State<AcercadePlantas>
                             width: 15,
                           ),
                           Text(
-                            detail[0]['nombrecomun'],
+                            data.data()['nombrecomun'],
                             style: TextStyle(fontSize: 17, wordSpacing: 2),
                           ),
                         ],
@@ -759,49 +643,5 @@ class _AcercadePlantasState extends State<AcercadePlantas>
         ),
       ],
     );
-  }
-
-  //funcion para obtener datos de la base de datos
-  getData(id) {
-    print('el id del reporte es ' + id);
-    FirebaseFirestore.instance
-        .collection('reportes')
-        .doc(id)
-        .get()
-        .then((DocumentSnapshot doc) {
-      setState(() {
-        _image = doc.data()['foto'];
-        _nombre = doc.data()['planta'];
-        _fecha = doc.data()['fecha'];
-        _direccion = doc.data()['direccion'];
-        _latitud = doc.data()['latitud'];
-        _longitud = doc.data()['longitud'];
-      });
-      getDatas(_nombre);
-    }).catchError((error) {
-      print('no pudimos recuperar nada');
-    });
-  }
-
-  getDatas(nombre) async {
-    FirebaseFirestore.instance
-        .collection('plantas')
-        .where('nombrecomun', isEqualTo: nombre)
-        .get()
-        .then((value) {
-      setState(() {
-        estado = true;
-      });
-
-      value.docs.forEach((doc) {
-        if (value != null) {
-          infoRecuperado.clear();
-          value.docs.forEach((element) {
-            infoRecuperado.add(doc.data());
-            print(infoRecuperado);
-          });
-        }
-      });
-    });
   }
 }

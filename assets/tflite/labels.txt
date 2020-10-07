@@ -1,3 +1,3 @@
-0 Chincho
-1 Atajo
-2 Matico
+Chincho
+Atajo
+Matico

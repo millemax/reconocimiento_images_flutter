@@ -1,12 +1,12 @@
-
+import 'package:MedicPlant/pages/Description.dart';
 import 'package:MedicPlant/pages/camera_page.dart';
+import 'package:MedicPlant/pages/home.dart';
 import 'package:MedicPlant/pages/login_page.dart';
 import 'package:MedicPlant/pages/result_page.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:MedicPlant/pages/splash.dart';
 import 'package:firebase_core/firebase_core.dart';
-
 
 import 'pages/menu.dart';
 
@@ -43,8 +43,9 @@ class _MyAppState extends State<MyApp> {
         'camerapage': (context) => CameraPage(
               cameras: cameras,
             ),
-        
         'login': (context) => LoginPage(),
+        'DescripcionPlanta': (context) => DescripcionPlanta(),
+        'MyHome': (context) => MyHome(),
       },
     );
   }
