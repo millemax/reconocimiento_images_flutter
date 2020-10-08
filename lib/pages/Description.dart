@@ -69,7 +69,9 @@ class _DescripcionPlantaState extends State<DescripcionPlanta>
                                       padding: const EdgeInsets.only(
                                           left: 20.0, top: 270, bottom: 10),
                                       child: Container(
-                                        height: 50,
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.08,
                                         width:
                                             MediaQuery.of(context).size.width *
                                                 0.5,
@@ -88,7 +90,7 @@ class _DescripcionPlantaState extends State<DescripcionPlanta>
                                             Text(
                                               data.data()['nombrecomun'],
                                               style: TextStyle(
-                                                  fontSize: 22.0,
+                                                  fontSize: 20.0,
                                                   color: Colors.white),
                                               textAlign: TextAlign.left,
                                             ),
@@ -149,11 +151,8 @@ class _DescripcionPlantaState extends State<DescripcionPlanta>
                   top: false,
                   child: AppBar(
                     backgroundColor: Color.fromRGBO(0, 0, 0, 0.4),
-
-//                iconTheme: IconThemeData(
-//                  color: Colors.red, //change your color here
-//                ),
-
+                    automaticallyImplyLeading: false,
+                    //-----icon leading
                     leading: GestureDetector(
                       onTap: () {
                         Navigator.pop(context);
@@ -163,13 +162,11 @@ class _DescripcionPlantaState extends State<DescripcionPlanta>
                         color: Colors.white,
                       ),
                     ),
-
                     elevation: 0,
                     title: Text(
                       "Acerca de las Plantas",
                       style: TextStyle(color: Colors.white),
                     ),
-
                     centerTitle: true,
                   ),
                 ),
@@ -186,9 +183,9 @@ class _DescripcionPlantaState extends State<DescripcionPlanta>
     return ListView(
       children: [
         Padding(
-          padding: EdgeInsets.only(right: 30, left: 30, top: 20),
+          padding: EdgeInsets.only(right: 10, left: 10, top: 20),
           child: Container(
-            width: MediaQuery.of(context).size.width * 0.9,
+            width: MediaQuery.of(context).size.width * 1,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -211,17 +208,14 @@ class _DescripcionPlantaState extends State<DescripcionPlanta>
                     ),
                   ],
                 ),
-                //--------
-                SizedBox(
-                  height: 1,
-                ),
+
                 //----Partes utilizables
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
                       padding: EdgeInsets.only(top: 15, bottom: 10),
-                      width: MediaQuery.of(context).size.width * 0.7,
+                      width: MediaQuery.of(context).size.width * 0.85,
                       decoration: BoxDecoration(),
                       child: Row(
                         children: [
@@ -241,7 +235,7 @@ class _DescripcionPlantaState extends State<DescripcionPlanta>
                             ),
                           ),
                           SizedBox(
-                            width: 15,
+                            width: 5,
                           ),
                           Text(
                             data.data()['partesutilizables'],
@@ -254,17 +248,13 @@ class _DescripcionPlantaState extends State<DescripcionPlanta>
                   ],
                 ),
 
-                //--------
-                SizedBox(
-                  height: 1,
-                ),
                 //---------------Uso medicinal---------
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
                       padding: EdgeInsets.only(top: 15, bottom: 10),
-                      width: MediaQuery.of(context).size.width * 0.7,
+                      width: MediaQuery.of(context).size.width * 0.85,
                       decoration: BoxDecoration(),
                       child: Column(
                         children: [
@@ -290,26 +280,26 @@ class _DescripcionPlantaState extends State<DescripcionPlanta>
                               ),
                             ],
                           ),
-                          Text(
-                            data.data()['usomedicinal'],
-                            textAlign: TextAlign.justify,
-                            style: TextStyle(fontSize: 17, wordSpacing: 2),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10.0),
+                            child: Text(
+                              data.data()['usomedicinal'],
+                              textAlign: TextAlign.justify,
+                              style: TextStyle(fontSize: 17, wordSpacing: 2),
+                            ),
                           ),
                         ],
                       ),
                     ),
                   ],
                 ),
-                //------------Dosis ------
-                SizedBox(
-                  height: 1,
-                ),
+                //------------------dosis-----------------
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
                       padding: EdgeInsets.only(top: 15, bottom: 10),
-                      width: MediaQuery.of(context).size.width * 0.7,
+                      width: MediaQuery.of(context).size.width * 0.85,
                       decoration: BoxDecoration(),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -336,9 +326,12 @@ class _DescripcionPlantaState extends State<DescripcionPlanta>
                               ),
                             ],
                           ),
-                          Text(
-                            data.data()['dosis'],
-                            style: TextStyle(fontSize: 17, wordSpacing: 2),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10.0),
+                            child: Text(
+                              data.data()['dosis'],
+                              style: TextStyle(fontSize: 17, wordSpacing: 2),
+                            ),
                           ),
                         ],
                       ),
@@ -346,16 +339,13 @@ class _DescripcionPlantaState extends State<DescripcionPlanta>
                   ],
                 ),
 
-                SizedBox(
-                  height: 1,
-                ),
                 //------------Contra indicacion ------
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
                       padding: EdgeInsets.only(top: 15, bottom: 10),
-                      width: MediaQuery.of(context).size.width * 0.7,
+                      width: MediaQuery.of(context).size.width * 0.85,
                       decoration: BoxDecoration(),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -378,21 +368,21 @@ class _DescripcionPlantaState extends State<DescripcionPlanta>
                                 ),
                               ),
                               SizedBox(
-                                width: 15,
+                                width: 5,
                               ),
                             ],
                           ),
-                          Text(
-                            data.data()['contraindicacion'],
-                            style: TextStyle(fontSize: 17, wordSpacing: 2),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10.0),
+                            child: Text(
+                              data.data()['contraindicacion'],
+                              style: TextStyle(fontSize: 17, wordSpacing: 2),
+                            ),
                           ),
                         ],
                       ),
                     ),
                   ],
-                ),
-                SizedBox(
-                  height: 1,
                 ),
                 //-----------------planta
                 Row(
@@ -400,7 +390,7 @@ class _DescripcionPlantaState extends State<DescripcionPlanta>
                   children: [
                     Container(
                       padding: EdgeInsets.only(top: 15, bottom: 10),
-                      width: MediaQuery.of(context).size.width * 0.7,
+                      width: MediaQuery.of(context).size.width * 0.85,
                       decoration: BoxDecoration(),
                       child: Row(
                         children: [
@@ -420,7 +410,7 @@ class _DescripcionPlantaState extends State<DescripcionPlanta>
                             ),
                           ),
                           SizedBox(
-                            width: 15,
+                            width: 5,
                           ),
                           Text(
                             data.data()['planta'],
