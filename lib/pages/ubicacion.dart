@@ -11,13 +11,15 @@ class Ubicacion extends StatefulWidget {
 class _UbicacionState extends State<Ubicacion> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: GoogleMap(
-          initialCameraPosition: CameraPosition(
-        target: LatLng(-13.6564672, -73.3826469),
-        zoom: 12,
-      )),
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: GoogleMap(
+            initialCameraPosition: CameraPosition(
+          target: LatLng(-13.6564672, -73.3826469),
+          zoom: 12,
+        )),
+      ),
     );
   }
 }

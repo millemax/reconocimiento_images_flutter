@@ -1,15 +1,10 @@
-//import 'dart:io';
-import 'dart:io';
 
+import 'dart:io';
 import 'package:MedicPlant/pages/home.dart';
 import 'package:MedicPlant/pages/perfil.dart';
 import 'package:MedicPlant/pages/plantas.dart';
-
 import 'package:MedicPlant/pages/ubicacion.dart';
 import 'package:flutter/material.dart';
-
-import 'Aboutplantas/prueba.dart';
-//import 'package:image_picker/image_picker.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image_cropper/image_cropper.dart';
 
@@ -120,7 +115,7 @@ class _MenuScreenState extends State<MenuScreen> {
         color: Color(0xFF06B7A2),
         shape: CircularNotchedRectangle(),
         child: Container(
-          height: 80,
+          height: MediaQuery.of(context).size.height * 0.1,
           child: Padding(
             padding: const EdgeInsets.symmetric(
               horizontal: 30,
@@ -131,7 +126,7 @@ class _MenuScreenState extends State<MenuScreen> {
                 Column(
                   children: [
                     IconButton(
-                        icon: Icon(Icons.home, color: Colors.white, size: 40),
+                        icon: Icon(Icons.home, color: Colors.white, size: 36),
                         onPressed: () {
                           if (_pageController.hasClients) {
                             _pageController.animateToPage(0,
@@ -146,7 +141,7 @@ class _MenuScreenState extends State<MenuScreen> {
                   children: [
                     IconButton(
                         icon: Icon(Icons.add_location,
-                            color: Colors.white, size: 40),
+                            color: Colors.white, size: 36),
                         onPressed: () {
                           if (_pageController.hasClients) {
                             _pageController.animateToPage(1,
@@ -161,7 +156,7 @@ class _MenuScreenState extends State<MenuScreen> {
                 Column(
                   children: [
                     IconButton(
-                        icon: Icon(Icons.spa, color: Colors.white, size: 40),
+                        icon: Icon(Icons.spa, color: Colors.white, size: 36),
                         onPressed: () {
                           if (_pageController.hasClients) {
                             _pageController.animateToPage(2,
@@ -175,7 +170,7 @@ class _MenuScreenState extends State<MenuScreen> {
                 Column(
                   children: [
                     IconButton(
-                        icon: Icon(Icons.person, color: Colors.white, size: 40),
+                        icon: Icon(Icons.person, color: Colors.white, size: 36),
                         onPressed: () {
                           if (_pageController.hasClients) {
                             _pageController.animateToPage(3,

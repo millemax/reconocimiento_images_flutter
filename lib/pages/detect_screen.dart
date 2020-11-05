@@ -57,7 +57,7 @@ with TickerProviderStateMixin {
 
   void _setupAnimation() {
     _colorAnimController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 500));
+        AnimationController(duration: Duration(milliseconds: 500));
     _colorTween = ColorTween(begin: Colors.green, end: Colors.red)
         .animate(_colorAnimController);
   }

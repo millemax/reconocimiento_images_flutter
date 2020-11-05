@@ -45,6 +45,8 @@ class _PerfilState extends State<Perfil> {
               Container(
                   padding: EdgeInsets.only(top: 30),
                   child: FloatingActionButton(
+                    backgroundColor: Colors.purple[300],
+                    focusColor: Colors.amber,
                     onPressed: () {
                       if ((controller.text.isNotEmpty &&
                               controller.text.length >= 6) ||
@@ -88,8 +90,8 @@ class _PerfilState extends State<Perfil> {
 
                                 if (!snapshot.hasData) {
                                   return Container(
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.93,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.93,
                                     child: Center(
                                       child: CircularProgressIndicator(),
                                     ),

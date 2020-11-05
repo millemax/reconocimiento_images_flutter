@@ -36,7 +36,6 @@ class _MyHomeState extends State<MyHome> {
                 ),
               )
             : Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Stack(
                     children: [
@@ -122,7 +121,7 @@ class _MyHomeState extends State<MyHome> {
                   ),
                   Container(
                     /* color: Colors.amber, */
-                    height: MediaQuery.of(context).size.height * 0.5,
+                    height: MediaQuery.of(context).size.height * 0.51,
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         image: AssetImage("assets/images/cuadrado.png"),
@@ -149,7 +148,7 @@ class _MyHomeState extends State<MyHome> {
                                     SizedBox(width: 10),
                                     Text("CAPTURA LA FOTO",
                                         style: TextStyle(
-                                            fontSize: 12,
+                                            fontSize: 13,
                                             fontWeight: FontWeight.bold))
                                   ],
                                 ),
@@ -160,12 +159,12 @@ class _MyHomeState extends State<MyHome> {
                                       "assets/images/chip.png",
                                       height:
                                           MediaQuery.of(context).size.height *
-                                              0.07,
+                                              0.08,
                                     ),
                                     SizedBox(width: 10),
                                     Text("ANALIZA",
                                         style: TextStyle(
-                                            fontSize: 12,
+                                            fontSize: 13,
                                             fontWeight: FontWeight.bold))
                                   ],
                                 ),
@@ -181,7 +180,7 @@ class _MyHomeState extends State<MyHome> {
                                     SizedBox(width: 10),
                                     Text("GUARDA LA FOTO",
                                         style: TextStyle(
-                                            fontSize: 12,
+                                            fontSize: 13,
                                             fontWeight: FontWeight.bold)),
                                   ],
                                 ),
@@ -198,7 +197,7 @@ class _MyHomeState extends State<MyHome> {
                           ),
                           /* color: Colors.blue, */
                           height: double.infinity,
-                          width: MediaQuery.of(context).size.width * 0.4,
+                          width: MediaQuery.of(context).size.width * 0.42,
                           child: Padding(
                             padding: const EdgeInsets.only(top: 60),
                             child: Image.asset(

@@ -81,7 +81,9 @@ class _AcercadePlantasState extends State<AcercadePlantas>
                                       padding: const EdgeInsets.only(
                                           left: 20.0, top: 265, bottom: 10),
                                       child: Container(
-                                        height: 50,
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.08,
                                         width:
                                             MediaQuery.of(context).size.width *
                                                 0.5,
@@ -149,10 +151,6 @@ class _AcercadePlantasState extends State<AcercadePlantas>
                                                     TextStyle(fontSize: 14.0),
                                                 textAlign: TextAlign.left,
                                               ),
-                                              /* Padding(
-                                          padding: EdgeInsets.only(left: 10),
-                                          child: Text("Ver planta en mapa"),
-                                        ) */
                                             ],
                                           ),
                                           SizedBox(
@@ -180,14 +178,6 @@ class _AcercadePlantasState extends State<AcercadePlantas>
                                                   textAlign: TextAlign.left,
                                                 ),
                                               ),
-                                              /* Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 1.0),
-                                          child: Image.asset(
-                                            "assets/images/mapalocation.png",
-                                            scale: 7,
-                                          ),
-                                        ), */
                                             ],
                                           )
                                         ],
@@ -272,6 +262,8 @@ class _AcercadePlantasState extends State<AcercadePlantas>
                         top: false,
                         child: AppBar(
                           backgroundColor: Color.fromRGBO(0, 0, 0, 0.4),
+                          //----------icon leading
+                          automaticallyImplyLeading: false,
                           leading: GestureDetector(
                             child: Icon(
                               Icons.arrow_back,
@@ -302,9 +294,9 @@ class _AcercadePlantasState extends State<AcercadePlantas>
     return ListView(
       children: [
         Padding(
-          padding: EdgeInsets.only(right: 30, left: 30, top: 20),
+          padding: EdgeInsets.only(right: 10, left: 10, top: 20),
           child: Container(
-            width: MediaQuery.of(context).size.width * 0.9,
+            width: MediaQuery.of(context).size.width * 1,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -327,17 +319,14 @@ class _AcercadePlantasState extends State<AcercadePlantas>
                     ),
                   ],
                 ),
-                //--------
-                SizedBox(
-                  height: 1,
-                ),
+
                 //----Partes utilizables
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
                       padding: EdgeInsets.only(top: 15, bottom: 10),
-                      width: MediaQuery.of(context).size.width * 0.7,
+                      width: MediaQuery.of(context).size.width * 0.85,
                       decoration: BoxDecoration(),
                       child: Row(
                         children: [
@@ -357,7 +346,7 @@ class _AcercadePlantasState extends State<AcercadePlantas>
                             ),
                           ),
                           SizedBox(
-                            width: 15,
+                            width: 5,
                           ),
                           Text(
                             info[0]['partesutilizables'],
@@ -370,17 +359,13 @@ class _AcercadePlantasState extends State<AcercadePlantas>
                   ],
                 ),
 
-                //--------
-                SizedBox(
-                  height: 1,
-                ),
                 //---------------Uso medicinal---------
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
                       padding: EdgeInsets.only(top: 15, bottom: 10),
-                      width: MediaQuery.of(context).size.width * 0.7,
+                      width: MediaQuery.of(context).size.width * 0.85,
                       decoration: BoxDecoration(),
                       child: Column(
                         children: [
@@ -406,10 +391,13 @@ class _AcercadePlantasState extends State<AcercadePlantas>
                               ),
                             ],
                           ),
-                          Text(
-                            info[0]['usomedicinal'],
-                            textAlign: TextAlign.justify,
-                            style: TextStyle(fontSize: 17, wordSpacing: 2),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10.0),
+                            child: Text(
+                              info[0]['usomedicinal'],
+                              textAlign: TextAlign.justify,
+                              style: TextStyle(fontSize: 17, wordSpacing: 2),
+                            ),
                           ),
                         ],
                       ),
@@ -417,15 +405,13 @@ class _AcercadePlantasState extends State<AcercadePlantas>
                   ],
                 ),
                 //------------Dosis ------
-                SizedBox(
-                  height: 1,
-                ),
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
                       padding: EdgeInsets.only(top: 15, bottom: 10),
-                      width: MediaQuery.of(context).size.width * 0.7,
+                      width: MediaQuery.of(context).size.width * 0.85,
                       decoration: BoxDecoration(),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -452,9 +438,12 @@ class _AcercadePlantasState extends State<AcercadePlantas>
                               ),
                             ],
                           ),
-                          Text(
-                            info[0]['dosis'],
-                            style: TextStyle(fontSize: 17, wordSpacing: 2),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10.0),
+                            child: Text(
+                              info[0]['dosis'],
+                              style: TextStyle(fontSize: 17, wordSpacing: 2),
+                            ),
                           ),
                         ],
                       ),
@@ -462,16 +451,13 @@ class _AcercadePlantasState extends State<AcercadePlantas>
                   ],
                 ),
 
-                SizedBox(
-                  height: 1,
-                ),
                 //------------Contra indicacion ------
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
                       padding: EdgeInsets.only(top: 15, bottom: 10),
-                      width: MediaQuery.of(context).size.width * 0.7,
+                      width: MediaQuery.of(context).size.width * 0.85,
                       decoration: BoxDecoration(),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -494,29 +480,30 @@ class _AcercadePlantasState extends State<AcercadePlantas>
                                 ),
                               ),
                               SizedBox(
-                                width: 15,
+                                width: 5,
                               ),
                             ],
                           ),
-                          Text(
-                            info[0]['contraindicacion'],
-                            style: TextStyle(fontSize: 17, wordSpacing: 2),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10.0),
+                            child: Text(
+                              info[0]['contraindicacion'],
+                              style: TextStyle(fontSize: 17, wordSpacing: 2),
+                            ),
                           ),
                         ],
                       ),
                     ),
                   ],
                 ),
-                SizedBox(
-                  height: 1,
-                ),
+
                 //-----------------planta
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
                       padding: EdgeInsets.only(top: 15, bottom: 10),
-                      width: MediaQuery.of(context).size.width * 0.7,
+                      width: MediaQuery.of(context).size.width * 0.85,
                       decoration: BoxDecoration(),
                       child: Row(
                         children: [
@@ -536,7 +523,7 @@ class _AcercadePlantasState extends State<AcercadePlantas>
                             ),
                           ),
                           SizedBox(
-                            width: 15,
+                            width: 5,
                           ),
                           Text(
                             info[0]['planta'],
