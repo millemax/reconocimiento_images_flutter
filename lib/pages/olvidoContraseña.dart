@@ -62,7 +62,7 @@ class _OlvidoContrasenaState extends State<OlvidoContrasena> {
                             style: TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.purple[300]),
+                                color: Theme.of(context).primaryColorDark),
                           ),
                         ),
                         Padding(
@@ -72,18 +72,55 @@ class _OlvidoContrasenaState extends State<OlvidoContrasena> {
                             style: TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.purple[300]),
+                                color: Theme.of(context).primaryColorDark),
                           ),
                         )
                       ],
                     ),
                   ),
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    child: Image.asset(
-                      "assets/images/img.png",
-                      fit: BoxFit.cover,
-                    ),
+                  Stack(
+                    children: [
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        child: Image.asset(
+                          "assets/images/img.png",
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      //------------------regresar a login--------
+                      Padding(
+                        padding: const EdgeInsets.only(left: 15.0, top: 10.0),
+                        child: GestureDetector(
+                          child: Image.asset(
+                            "assets/images/cartel.png",
+                            width: MediaQuery.of(context).size.width * 0.35,
+                          ),
+                          onTap: () => pushRoute(context),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 22.0, left: 30.0),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.arrow_back,
+                              color: Colors.white,
+                            ),
+                            SizedBox(width: 5.0),
+                            Text(
+                              "Volver atras",
+                              style: TextStyle(
+                                  fontSize: MediaQuery.of(context).size.height *
+                                      0.016,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w900,
+                                  letterSpacing: 1),
+                            ),
+                          ],
+                        ),
+                      ),
+                      //-----------------fin regresar a login---------
+                    ],
                   ),
                   Container(
                     child: Column(
@@ -110,7 +147,7 @@ class _OlvidoContrasenaState extends State<OlvidoContrasena> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Text(
-                                "Ingrese su contraseña par poder restablecer su contraseña",
+                                "Ingrese su correo par poder restablecer su contraseña",
                                 style: TextStyle(
                                   fontSize: 12,
                                 ),
@@ -145,36 +182,23 @@ class _OlvidoContrasenaState extends State<OlvidoContrasena> {
                             ],
                           ),
                         ),
-                        //--------boton enviar y return a login-----
+                        //--------boton enviar
                         Padding(
                           padding: EdgeInsets.only(
                               bottom: 5, left: 15, right: 15, top: 15),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(Icons.arrow_left),
-                              Padding(
-                                padding: const EdgeInsets.only(right: 10),
-                                child: GestureDetector(
-                                  child: Text(
-                                    "Regresar a login",
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                    ),
-                                  ),
-                                  onTap: () => pushRoute(context),
-                                ),
-                              ),
                               RaisedButton(
                                 onPressed: () {
                                   restablecerContrasena(context);
                                 },
                                 padding: EdgeInsets.symmetric(
-                                    vertical: 15, horizontal: 35),
-                                color: Colors.purple[300],
+                                    vertical: 15, horizontal: 140),
+                                color: Theme.of(context).primaryColorDark,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.all(
-                                    Radius.circular(30),
+                                    Radius.circular(10),
                                   ),
                                 ),
                                 child: Text(

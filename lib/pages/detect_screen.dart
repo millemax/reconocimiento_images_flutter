@@ -1,4 +1,3 @@
-
 import 'package:MedicPlant/helpers/camera_helper.dart';
 import 'package:MedicPlant/helpers/tflite_helper.dart';
 import 'package:MedicPlant/models/result.dart';
@@ -11,24 +10,22 @@ class DetectScreen extends StatefulWidget {
   _DetectScreenState createState() => _DetectScreenState();
 }
 
-class _DetectScreenState extends State<DetectScreen> 
-with TickerProviderStateMixin {
-
+class _DetectScreenState extends State<DetectScreen>
+    with TickerProviderStateMixin {
   AnimationController _colorAnimController;
   Animation _colorTween;
 
   List<Result> outputs;
 
-//inicializamos  con esta funcion 
+//inicializamos  con esta funcion
   void initState() {
     super.initState();
 
     //cargar el modelo tensorflow lite
-    TFLiteHelper.loadModel().then((value){
+    TFLiteHelper.loadModel().then((value) {
       setState(() {
-        TFLiteHelper.modelLoaded=true;
+        TFLiteHelper.modelLoaded = true;
       });
-
     });
 
     //inicializamos la camara
@@ -37,22 +34,11 @@ with TickerProviderStateMixin {
 
     //preparar animation
     _setupAnimation();
-    
-
-    
-
-
-
-
-
   }
-
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-       
-    );
+    return Container();
   }
 
   void _setupAnimation() {

@@ -33,11 +33,14 @@ class _MyAppState extends State<MyApp> {
       title: 'Medic Plant',
       initialRoute: '/',
       theme: ThemeData(
-        primaryColor: Color(0xFF06B7A2),
+        /* primaryColor: Color(0xFF06B7A2), */
+        primaryColor: Color(0xff009688),
         canvasColor: Colors.transparent,
+        primaryColorDark: Color(0XFFbe98d0),
+        fontFamily: 'comforta',
       ),
       routes: {
-        '/': (context) => Splashscreen(),
+        '/': (context) => LoginPage(),
         'menu': (context) => MenuScreen(),
         'resultpage': (context) => ResultPage(),
         'camerapage': (context) => CameraPage(

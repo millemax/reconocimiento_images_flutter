@@ -223,16 +223,14 @@ class _AcercadePlantasState extends State<AcercadePlantas>
                             indicatorColor: Colors.amber,
                             tabs: [
                               Tab(
-                                child: Text(
-                                  "Informacion",
-                                  textAlign: TextAlign.center,
-                                ),
+                                child: Text("Informacion",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(color: Colors.amber)),
                               ),
                               Tab(
-                                child: Text(
-                                  "Detalles",
-                                  textAlign: TextAlign.center,
-                                ),
+                                child: Text("Detalles",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(color: Colors.amber)),
                               ),
                             ],
                             controller: _tabController,

@@ -77,7 +77,7 @@ class _SearchPlantasState extends State<SearchPlantas> {
                               labelText: "Nombre planta",
                               hintText: "Nombre planta",
                               enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(30),
+                                borderRadius: BorderRadius.circular(10),
                                 borderSide: BorderSide(
                                   color: Theme.of(context).primaryColor,
                                   width: 2,
@@ -176,13 +176,19 @@ class _SearchPlantasState extends State<SearchPlantas> {
                                                 height: 5.0,
                                               ),
                                               //-------------------
-                                              Text(
-                                                filtroPlantas[index]
-                                                    ['direccion'],
-                                                /* filteredUsers[index].email, */
-                                                style: TextStyle(
-                                                    fontSize: 10.0,
-                                                    color: Colors.grey),
+                                              Container(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.65,
+                                                child: Text(
+                                                  filtroPlantas[index]
+                                                      ['direccion'],
+                                                  /* filteredUsers[index].email, */
+                                                  style: TextStyle(
+                                                      fontSize: 10.0,
+                                                      color: Colors.grey),
+                                                ),
                                               ),
                                             ],
                                           )

@@ -45,7 +45,7 @@ class _PerfilState extends State<Perfil> {
               Container(
                   padding: EdgeInsets.only(top: 30),
                   child: FloatingActionButton(
-                    backgroundColor: Colors.purple[300],
+                    backgroundColor: Theme.of(context).primaryColorDark,
                     focusColor: Colors.amber,
                     onPressed: () {
                       if ((controller.text.isNotEmpty &&
@@ -129,11 +129,14 @@ class _PerfilState extends State<Perfil> {
                                 }
                               }),
                           FloatingActionButton(
-                            backgroundColor: Colors.purple[200],
+                            backgroundColor: Colors.grey[300],
                             onPressed: () {
                               getImage();
                             },
-                            child: Icon(Icons.edit),
+                            child: Icon(
+                              Icons.edit,
+                              color: Colors.black54,
+                            ),
                           )
                         ],
                       ),

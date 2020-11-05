@@ -139,7 +139,7 @@ class _MenuScreenState extends State<MenuScreen> {
                                 curve: Curves.decelerate);
                           }
                         }),
-                    Text('  Home', style: TextStyle(color: Colors.white)),
+                    Text('Inicio', style: TextStyle(color: Colors.white)),
                   ],
                 ),
                 Column(
@@ -206,6 +206,8 @@ class _MenuScreenState extends State<MenuScreen> {
         builder: (context) {
           return AlertDialog(
             titlePadding: EdgeInsets.only(top: 2),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10.0))),
             title: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -220,27 +222,85 @@ class _MenuScreenState extends State<MenuScreen> {
             content: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                FlatButton.icon(
-                  color: Color(0xFF06B7A2),
-                  onPressed: () {
-                    _getGallery();
-                    Navigator.of(context).pop();
-                  },
-                  label: Text('Galeria', style: TextStyle(color: Colors.white)),
-                  icon: Icon(Icons.add_photo_alternate, color: Colors.white),
-                ),
-                SizedBox(
-                  width: 20,
-                ),
-                FlatButton.icon(
-                  color: Color(0xFF06B7A2),
-                  onPressed: () {
-                    _getImage();
-                    Navigator.of(context).pop();
-                  },
-                  label: Text('Cámara', style: TextStyle(color: Colors.white)),
-                  icon: Icon(Icons.camera_alt, color: Colors.white),
-                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: Row(
+                    children: [
+                      Wrap(
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        direction: Axis.vertical,
+                        alignment: WrapAlignment.start,
+                        spacing: 1.0,
+                        runSpacing: 1.0,
+                        children: [
+                          Text('Cámara',
+                              style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                  fontWeight: FontWeight.w800)),
+                          GestureDetector(
+                            child: Container(
+                                decoration: BoxDecoration(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10.0)),
+                                    color: Theme.of(context).primaryColor),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
+                                  child: Image.asset(
+                                    "assets/images/camera.png",
+                                    height: MediaQuery.of(context).size.height *
+                                        0.09,
+                                  ),
+                                )),
+                            onTap: () {
+                              _getImage();
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        width: 25.0,
+                      ),
+                      //-------------galeria------
+                      Wrap(
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        direction: Axis.vertical,
+                        alignment: WrapAlignment.start,
+                        spacing: 1.0,
+                        runSpacing: 1.0,
+                        children: [
+                          Text('Galeria',
+                              style: TextStyle(
+                                  color: Theme.of(context).primaryColor)),
+                          GestureDetector(
+                            child: Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                      width: 1.0,
+                                      color: Theme.of(context).primaryColor),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10.0)),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10.0),
+                                  child: Image.asset(
+                                    "assets/images/gallery.png",
+                                    height: MediaQuery.of(context).size.height *
+                                        0.09,
+                                  ),
+                                )),
+                            onTap: () {
+                              _getGallery();
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                )
               ],
             ),
           );
