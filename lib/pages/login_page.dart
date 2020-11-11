@@ -831,10 +831,11 @@ class CustomTextField extends StatelessWidget {
             padding: const EdgeInsets.only(right: 10.0),
             child: Container(
               decoration: BoxDecoration(
-                  border: Border(
-                right: BorderSide(
-                    width: 1.0, color: Theme.of(context).primaryColor),
-              )),
+                border: Border(
+                  right: BorderSide(
+                      width: 1.0, color: Theme.of(context).primaryColor),
+                ),
+              ),
               child: IconTheme(
                 data: IconThemeData(color: Theme.of(context).primaryColor),
                 child: icon,

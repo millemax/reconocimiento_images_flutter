@@ -45,7 +45,9 @@ class _AcercadePlantasState extends State<AcercadePlantas>
             ? Container(
                 color: Colors.white,
                 child: Center(
-                  child: CircularProgressIndicator(),
+                  child: Container(
+                      width: MediaQuery.of(context).size.width * 0.1,
+                      child: Image.asset("assets/images/loadi.gif")),
                 ))
             : Stack(
                 children: <Widget>[
@@ -217,7 +219,7 @@ class _AcercadePlantasState extends State<AcercadePlantas>
                               ],
                             ),
                           ),
-                          expandedHeight: 460.0,
+                          expandedHeight: 475.0,
                           //-------PESTAÑASDENAVEGACION.----
                           bottom: TabBar(
                             indicatorColor: Colors.amber,

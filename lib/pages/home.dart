@@ -32,7 +32,9 @@ class _MyHomeState extends State<MyHome> {
             ? Container(
                 color: Colors.white,
                 child: Center(
-                  child: CircularProgressIndicator(),
+                  child: Container(
+                      width: MediaQuery.of(context).size.width * 0.1,
+                      child: Image.asset("assets/images/loadi.gif")),
                 ),
               )
             : Column(
@@ -68,32 +70,34 @@ class _MyHomeState extends State<MyHome> {
                                       fit: BoxFit.fill,
                                     ),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 10),
-                                    child: Container(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.3,
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.06,
-                                      decoration: BoxDecoration(
-                                        color: Colors.purple[300],
-                                        borderRadius: BorderRadius.only(
-                                            bottomLeft: Radius.circular(15),
-                                            bottomRight: Radius.circular(15)),
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Align(
-                                          alignment: Alignment.center,
-                                          child: Text(
-                                            recuperado[index]['data']
-                                                ['nombrecomun'],
-                                            style: TextStyle(
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.white),
-                                          ),
+                                  Container(
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.3,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.06,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                          width: 2.0,
+                                          color: Theme.of(context)
+                                              .primaryColorDark),
+                                      color: Theme.of(context)
+                                          .primaryColorDark
+                                          .withOpacity(0.9),
+                                      borderRadius: BorderRadius.only(
+                                          bottomRight: Radius.circular(15),
+                                          topLeft: Radius.circular(10)),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Align(
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                          recuperado[index]['data']
+                                              ['nombrecomun'],
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white),
                                         ),
                                       ),
                                     ),

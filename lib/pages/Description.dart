@@ -105,7 +105,7 @@ class _DescripcionPlantaState extends State<DescripcionPlanta>
                               ],
                             ),
                           ),
-                          expandedHeight: 380.0,
+                          expandedHeight: 385.0,
                           //-------PESTAÑASDENAVEGACION.----
                           bottom: TabBar(
                             indicatorColor: Colors.amber,
