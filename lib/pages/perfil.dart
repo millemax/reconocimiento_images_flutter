@@ -39,13 +39,13 @@ class _PerfilState extends State<Perfil> {
     final String id = FirebaseAuth.instance.currentUser.uid;
     getCorreo(id);
     return SafeArea(
-          child: Scaffold(
+      child: Scaffold(
           floatingActionButton: Column(
             children: [
               Container(
                   padding: EdgeInsets.only(top: 30),
                   child: FloatingActionButton(
-                    backgroundColor: Colors.purple[300],
+                    backgroundColor: Theme.of(context).primaryColorDark,
                     focusColor: Colors.amber,
                     onPressed: () {
                       if ((controller.text.isNotEmpty &&
@@ -103,8 +103,8 @@ class _PerfilState extends State<Perfil> {
                                       decoration: data.data()['fotoperfil'] ==
                                               null
                                           ? BoxDecoration(
-                                              color:
-                                                  Theme.of(context).primaryColor,
+                                              color: Theme.of(context)
+                                                  .primaryColor,
                                               borderRadius:
                                                   BorderRadius.circular(100),
                                               image: _image == null
@@ -116,8 +116,8 @@ class _PerfilState extends State<Perfil> {
                                                       fit: BoxFit.cover,
                                                       image: FileImage(_image)))
                                           : BoxDecoration(
-                                              color:
-                                                  Theme.of(context).primaryColor,
+                                              color: Theme.of(context)
+                                                  .primaryColor,
                                               borderRadius:
                                                   BorderRadius.circular(100),
                                               image: _image == null
@@ -125,16 +125,18 @@ class _PerfilState extends State<Perfil> {
                                                       fit: BoxFit.cover,
                                                       image: NetworkImage(data
                                                           .data()['fotoperfil']))
-                                                  : DecorationImage(
-                                                      fit: BoxFit.cover,
-                                                      image: FileImage(_image))));
+                                                  : DecorationImage(fit: BoxFit.cover, image: FileImage(_image))));
                                 }
                               }),
                           FloatingActionButton(
+                            backgroundColor: Colors.grey[300],
                             onPressed: () {
                               getImage();
                             },
-                            child: Icon(Icons.edit),
+                            child: Icon(
+                              Icons.edit,
+                              color: Colors.black54,
+                            ),
                           )
                         ],
                       ),
@@ -143,8 +145,8 @@ class _PerfilState extends State<Perfil> {
                       ),
                       Text(
                         'Perfil',
-                        style:
-                            TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 30, fontWeight: FontWeight.bold),
                       ),
                       SizedBox(
                         height: 50,
@@ -158,7 +160,8 @@ class _PerfilState extends State<Perfil> {
                           leading: Padding(
                               padding: EdgeInsets.only(left: 15),
                               child: Icon(Icons.email)),
-                          title: Title(color: Colors.black, child: Text(_correo)),
+                          title:
+                              Title(color: Colors.black, child: Text(_correo)),
                         ),
                       ),
                       SizedBox(
@@ -173,7 +176,8 @@ class _PerfilState extends State<Perfil> {
                             title: ListTile(
                               leading: Icon(Icons.lock),
                               title: Title(
-                                  color: Colors.black, child: Text('Contraseña')),
+                                  color: Colors.black,
+                                  child: Text('Contraseña')),
                               trailing: Icon(Icons.edit),
                             ),
                             children: [

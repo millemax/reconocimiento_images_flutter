@@ -59,6 +59,7 @@ dependencies:
   flutter_swiper: ^1.1.6
   #olas flutter 
   wave: ^0.1.0
+  path_provider: ^1.6.7
   
 
 
@@ -81,6 +82,8 @@ flutter:
   assets:
      - assets/images/
      - assets/tflite/
+     
+     
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
@@ -93,7 +96,13 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
+  fonts:
+      - family: comforta
+        fonts:
+          - asset: assets/fonts/Comfortaa-Bold.ttf
+          - asset: assets/fonts/Comfortaa-Light.ttf
+          - asset: assets/fonts/Comfortaa-Regular.ttf
+
   #   - family: Schyler
   #     fonts:
   #       - asset: fonts/Schyler-Regular.ttf

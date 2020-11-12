@@ -34,82 +34,94 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     //----declaramos el color del tema---
     Color primary = Theme.of(context).primaryColor;
+
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       key: _scaffoldKey,
       backgroundColor: Theme.of(context).primaryColor,
       body: SafeArea(
-        child: Column(
+        child: Stack(
           children: [
-            logo(context),
-            //------------------ boton login inicio---
-            Padding(
-              padding: EdgeInsets.only(
-                top: 80,
-                left: 20,
-                right: 20,
-              ),
-              child: Container(
-                width: MediaQuery.of(context).size.width * 0.75,
-                height: 50,
-                //------le pasa como un parametro el formulario
-                child: _button(
-                  "Iniciar Sesión",
-                  primary,
-                  Colors.white,
-                  Colors.white,
-                  primary,
-                  _loginSheet,
-                ),
-              ),
-            ),
-            //---------------------------
-            Padding(
-              padding: EdgeInsets.only(top: 10, left: 20, right: 20),
-              child: Container(
-                width: MediaQuery.of(context).size.width * 0.75,
-                height: 50,
-                //----------boton de registro inicio---
-                child: OutlineButton(
-                  highlightedBorderColor: Colors.white,
-                  borderSide: BorderSide(color: Colors.white, width: 2.0),
-                  highlightElevation: 0.0,
-                  splashColor: Colors.white,
-                  highlightColor: Theme.of(context).primaryColor,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                  ),
-                  child: Text(
-                    "Registro",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                      color: Colors.white,
-                    ),
-                  ),
-                  //-------funcion para llamar al formulario de registro--
-                  onPressed: () {
-                    _registerSheet();
-                  },
-                ),
-              ),
-            ),
+            //------------------
             //---------imagen con curva de inicio--
             Expanded(
               child: Align(
                 child: ClipPath(
                   child: Container(
-                    color: Colors.white,
-                    height: 300,
+                    color: Colors.white12,
+                    height: MediaQuery.of(context).size.height,
                   ),
                   clipper: BottomWaveClipper(),
                 ),
                 alignment: Alignment.bottomCenter,
               ),
-            )
+            ),
             //----
+            //------------------
+            Column(
+              children: [
+                logo(context),
+                //------------------ boton login inicio---
+                Padding(
+                  padding: EdgeInsets.only(
+                    top: 80,
+                    left: 20,
+                    right: 20,
+                  ),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * 0.75,
+                    height: 50,
+                    //------le pasa como un parametro el formulario
+                    child: _button(
+                      "Iniciar Sesión",
+                      primary,
+                      Colors.white,
+                      Theme.of(context).primaryColor,
+                      Colors.white,
+                      _loginSheet,
+                    ),
+                  ),
+                ),
+                //---------------------------
+                Padding(
+                  padding: EdgeInsets.only(top: 10, left: 20, right: 20),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * 0.75,
+                    height: 50,
+
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).primaryColor.withOpacity(0.9),
+                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    ),
+                    //----------boton de registro inicio---
+                    child: OutlineButton(
+                      highlightedBorderColor: Colors.white,
+                      borderSide: BorderSide(color: Colors.white, width: 1),
+                      highlightElevation: 0.0,
+                      splashColor: Colors.white,
+                      highlightColor: Theme.of(context).primaryColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      child: Text(
+                        "Registro",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          color: Colors.white,
+                        ),
+                      ),
+                      //-------funcion para llamar al formulario de registro--
+                      onPressed: () {
+                        _registerSheet();
+                      },
+                    ),
+                  ),
+                ),
+              ],
+              crossAxisAlignment: CrossAxisAlignment.center,
+            ),
           ],
-          crossAxisAlignment: CrossAxisAlignment.center,
         ),
       ),
     );
@@ -133,7 +145,8 @@ class _LoginPageState extends State<LoginPage> {
                 child: Align(
                   child: Container(
                     decoration: BoxDecoration(
-                        shape: BoxShape.circle, color: Colors.white),
+                        shape: BoxShape.circle,
+                        color: Colors.white.withRed(200)),
                     width: 150,
                     height: 150,
                   ),
@@ -156,8 +169,9 @@ class _LoginPageState extends State<LoginPage> {
               bottom: MediaQuery.of(context).size.width * 0.046,
               right: MediaQuery.of(context).size.width * 0.22,
               child: Container(
-                decoration:
-                    BoxDecoration(shape: BoxShape.circle, color: Colors.white),
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.white.withOpacity(0.8)),
               ),
             ),
             //----------circulo pequeño----
@@ -167,8 +181,9 @@ class _LoginPageState extends State<LoginPage> {
               bottom: 0,
               right: MediaQuery.of(context).size.width * 0.38,
               child: Container(
-                decoration:
-                    BoxDecoration(shape: BoxShape.circle, color: Colors.white),
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.white.withOpacity(0.7)),
               ),
             ),
           ],
@@ -177,7 +192,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-//-------widgett boton de login------
+//-------widgett boton iniciar sesion ------
   Widget _button(String text, Color splashColor, Color highlightColor,
       Color fillColor, Color textColor, void function()) {
     return RaisedButton(
@@ -188,8 +203,10 @@ class _LoginPageState extends State<LoginPage> {
       color: fillColor,
       //-----bordear
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(30.0),
+        borderRadius: BorderRadius.circular(10.0),
+        side: BorderSide(color: Colors.white, width: 1.0),
       ),
+
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 15, horizontal: 30),
         child: Text(
@@ -204,7 +221,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  //-------widgett boton de login------
+  //-------widgett "Iniciar"  ------ logearse
   Widget _buttonEnvio(String text, Color splashColor, Color highlightColor,
       Color fillColor, Color textColor) {
     return RaisedButton(
@@ -215,7 +232,7 @@ class _LoginPageState extends State<LoginPage> {
       color: fillColor,
       //-----bordear
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(30.0),
+        borderRadius: BorderRadius.circular(10.0),
       ),
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 15, horizontal: 30),
@@ -237,6 +254,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  //-----------------boton para registraerse-----
   Widget _buttonEnvioRegistro(String text, Color splashColor,
       Color highlightColor, Color fillColor, Color textColor) {
     return RaisedButton(
@@ -247,7 +265,7 @@ class _LoginPageState extends State<LoginPage> {
       color: fillColor,
       //-----bordear
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(30.0),
+        borderRadius: BorderRadius.circular(10.0),
       ),
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 15, horizontal: 30),
@@ -451,8 +469,8 @@ class _LoginPageState extends State<LoginPage> {
                               child: Text(
                                 "¿Olvido su contraseña?",
                                 style: TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.purple[300],
+                                  fontSize: 15,
+                                  color: Theme.of(context).primaryColorDark,
                                 ),
                               ),
                             ),
@@ -467,8 +485,12 @@ class _LoginPageState extends State<LoginPage> {
                               right: 20,
                               bottom: MediaQuery.of(context).viewInsets.bottom),
                           child: Container(
-                            child: _buttonEnvio("Iniciar", Colors.white,
-                                Colors.red, Colors.purple[300], Colors.white),
+                            child: _buttonEnvio(
+                                "Iniciar",
+                                Colors.white,
+                                Colors.red,
+                                Theme.of(context).primaryColorDark,
+                                Colors.white),
                             height: 50,
                             width: MediaQuery.of(context).size.width * 0.45,
                           ),
@@ -678,7 +700,7 @@ class _LoginPageState extends State<LoginPage> {
                             "Registrarme",
                             Colors.white,
                             Colors.red,
-                            Colors.purple[300],
+                            Theme.of(context).primaryColorDark,
                             Colors.white,
                           ),
                         ),
@@ -703,14 +725,47 @@ class BottomWaveClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     var path = Path();
-    path.moveTo(size.width, 0.0);
-    path.lineTo(size.width, size.height);
-    path.lineTo(0.0, size.height);
-    path.lineTo(0.0, size.height + 5);
-    var secondControlPoint = Offset(size.width - (size.width / 6), size.height);
-    var secondEndPoint = Offset(size.width, 0.0);
-    path.quadraticBezierTo(secondControlPoint.dx, secondControlPoint.dy,
-        secondEndPoint.dx, secondEndPoint.dy);
+
+    path.moveTo(0, size.height);
+
+    path.lineTo(size.width * 0.05, size.height);
+    path.lineTo(size.width * 0.13, size.height * 0.93);
+
+    path.quadraticBezierTo(size.width * 0.2, size.height - 80,
+        size.width * 0.25, size.height - 65);
+    path.quadraticBezierTo(size.width - (size.width * 0.25), size.height,
+        size.width * 0.96, size.height * 0.6);
+
+    path.quadraticBezierTo(
+        size.width, size.height * 0.5, size.width, size.height * 0.3);
+
+    path.quadraticBezierTo(size.width * 0.99, size.height * 0.1,
+        size.width * 0.90, size.height * 0.07);
+    //---SEGUNDA MITAD HOJA
+    path.quadraticBezierTo(size.width * 0.90, size.height * 0.1,
+        size.width * 0.80, size.height * 0.15);
+    path.quadraticBezierTo(size.width * 0.7, size.height * 0.2,
+        size.width * 0.6, size.height * 0.19);
+    //...POR EL,LOGO
+    path.quadraticBezierTo(size.width * 0.18, size.height * 0.23,
+        size.width * 0.022, size.height * 0.5);
+    //---in sES
+    path.quadraticBezierTo(size.width - (size.width * 1.03), size.height * 0.6,
+        size.width * 0.09, size.height * 0.75);
+
+    path.quadraticBezierTo(size.width - (size.width * 0.85), size.height * 0.8,
+        size.width * 0.15, size.height * 0.85);
+
+//----ADENTRO HOJ
+    path.quadraticBezierTo(size.width - (size.width * 0.7), size.height * 0.8,
+        size.width * 0.38, size.height * 0.6);
+    path.quadraticBezierTo(size.width - (size.width * 0.6), size.height * 0.5,
+        size.width * 0.53, size.height * 0.45);
+    //--RAMI GORDO
+    path.quadraticBezierTo(size.width - (size.width * 0.6), size.height * 0.5,
+        size.width * 0.4, size.height * 0.7);
+    path.quadraticBezierTo(size.width - (size.width * 0.4), size.height * 0.72,
+        size.width * 0.36, size.height * 0.75);
 
     return path;
   }
@@ -749,36 +804,44 @@ class CustomTextField extends StatelessWidget {
         validator: validator,
         obscureText: obsecure,
         style: TextStyle(
-          fontSize: 20,
+          fontSize: 17,
         ),
         decoration: InputDecoration(
-            labelStyle: TextStyle(
-              fontSize: 25,
+          labelStyle: TextStyle(
+            fontSize: 17,
+          ),
+          hintStyle: TextStyle(fontSize: 13),
+          labelText: label,
+          hintText: hint,
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(
+              color: Theme.of(context).primaryColor,
+              width: 1,
             ),
-            hintStyle: TextStyle(fontSize: 20),
-            labelText: label,
-            hintText: hint,
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(30),
-              borderSide: BorderSide(
-                color: Theme.of(context).primaryColor,
-                width: 2,
-              ),
+          ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(
+              color: Theme.of(context).primaryColor,
+              width: 1,
             ),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(30),
-              borderSide: BorderSide(
-                color: Theme.of(context).primaryColor,
-                width: 3,
-              ),
-            ),
-            prefixIcon: Padding(
+          ),
+          prefixIcon: Padding(
+            padding: const EdgeInsets.only(right: 10.0),
+            child: Container(
+              decoration: BoxDecoration(
+                  border: Border(
+                right: BorderSide(
+                    width: 1.0, color: Theme.of(context).primaryColor),
+              )),
               child: IconTheme(
                 data: IconThemeData(color: Theme.of(context).primaryColor),
                 child: icon,
               ),
-              padding: EdgeInsets.only(left: 30, right: 10),
-            )),
+            ),
+          ),
+        ),
       ),
     );
   }

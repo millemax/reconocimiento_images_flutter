@@ -5,7 +5,7 @@ import 'package:MedicPlant/pages/login_page.dart';
 import 'package:MedicPlant/pages/result_page.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:MedicPlant/pages/splash.dart';
+
 import 'package:firebase_core/firebase_core.dart';
 
 import 'pages/menu.dart';
@@ -33,11 +33,14 @@ class _MyAppState extends State<MyApp> {
       title: 'Medic Plant',
       initialRoute: '/',
       theme: ThemeData(
-        primaryColor: Color(0xFF06B7A2),
+        /* primaryColor: Color(0xFF06B7A2), */
+        primaryColor: Color(0xff009688),
         canvasColor: Colors.transparent,
+        primaryColorDark: Color(0XFFbe98d0),
+        fontFamily: 'comforta',
       ),
       routes: {
-        '/': (context) => Splashscreen(),
+        '/': (context) => LoginPage(),
         'menu': (context) => MenuScreen(),
         'resultpage': (context) => ResultPage(),
         'camerapage': (context) => CameraPage(
