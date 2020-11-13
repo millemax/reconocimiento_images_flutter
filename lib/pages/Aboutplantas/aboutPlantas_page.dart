@@ -1,6 +1,8 @@
-import 'package:MedicPlant/pages/Aboutplantas/mapsubicacion.dart';
+
 import 'package:flutter/material.dart';
+import 'package:map_launcher/map_launcher.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class AcercadePlantas extends StatefulWidget {
   final String id;
@@ -39,7 +41,7 @@ class _AcercadePlantasState extends State<AcercadePlantas>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.red,
       body: SafeArea(
         child: estado == false
             ? Container(
@@ -196,13 +198,16 @@ class _AcercadePlantasState extends State<AcercadePlantas>
                                                 left: 1.0),
                                             child: GestureDetector(
                                               onTap: () {
-                                                Navigator.push(
+                                                openMapsSheet(context, _latitud,
+                                                    _longitud, _nombre);
+/*                                                 Navigator.push(
                                                     context,
                                                     MaterialPageRoute(
                                                         builder: (context) =>
                                                             MapsUbicacion(
                                                                 _latitud,
-                                                                _longitud)));
+                                                                _longitud,
+                                                                _nombre))); */
                                               },
                                               child: Image.asset(
                                                 "assets/images/mapalocation.png",
@@ -778,14 +783,16 @@ class _AcercadePlantasState extends State<AcercadePlantas>
         .get()
         .then((value) {  
 
-          var tamano= value.docs.length;          
+          var tamano= value.docs.length;
+          print('tamano : '+ tamano.toString());          
 
             value.docs.forEach((doc) {
               if (value != null) {
                 infoRecuperado.clear();
                 value.docs.forEach((element) {
                   infoRecuperado.add(doc.data());
-                  print(infoRecuperado);
+                  print('array : ' + infoRecuperado.length.toString());
+                  
                   if (infoRecuperado.length == tamano) {
                     setState(() {
                       estado = true;
@@ -800,5 +807,43 @@ class _AcercadePlantasState extends State<AcercadePlantas>
     });
   }
 
+  //esta es la funcion para mostrar el mapa
+  openMapsSheet(context, latitude, longitude, nombre) async {
+    try {
+      final coords = Coords(latitude, longitude);
+      final title = nombre;
+      final availableMaps = await MapLauncher.installedMaps;
 
+      showModalBottomSheet(
+        context: context,
+        builder: (BuildContext context) {
+          return SafeArea(
+            child: SingleChildScrollView(
+              child: Container(
+                child: Wrap(
+                  children: <Widget>[
+                    for (var map in availableMaps)
+                      ListTile(
+                        onTap: () => map.showMarker(
+                          coords: coords,
+                          title: title,
+                        ),
+                        title: Text(map.mapName),
+                        leading: SvgPicture.asset(
+                          map.icon,
+                          height: 30.0,
+                          width: 30.0,
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
+      );
+    } catch (e) {
+      print(e);
+    }
+  }
 }
