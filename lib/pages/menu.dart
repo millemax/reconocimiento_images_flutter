@@ -5,6 +5,8 @@ import 'package:MedicPlant/pages/perfil.dart';
 import 'package:MedicPlant/pages/plantas.dart';
 import 'package:MedicPlant/pages/ubicacion.dart';
 import 'package:flutter/material.dart';
+
+//import 'package:image_picker/image_picker.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image_cropper/image_cropper.dart';
 
@@ -104,7 +106,7 @@ class _MenuScreenState extends State<MenuScreen> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Color(0xFF06B7A2),
+        backgroundColor: Theme.of(context).primaryColor,
         onPressed: () {
           _mostrarAlert();
         },
@@ -112,7 +114,7 @@ class _MenuScreenState extends State<MenuScreen> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
-        color: Color(0xFF06B7A2),
+        color: Theme.of(context).primaryColor,
         shape: CircularNotchedRectangle(),
         child: Container(
           height: MediaQuery.of(context).size.height * 0.1,

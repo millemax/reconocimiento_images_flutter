@@ -1,6 +1,5 @@
 import 'package:MedicPlant/pages/Aboutplantas/mapsubicacion.dart';
 import 'package:flutter/material.dart';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AcercadePlantas extends StatefulWidget {
@@ -24,17 +23,18 @@ class _AcercadePlantasState extends State<AcercadePlantas>
   double _longitud;
   String _nombre = "";
 
-  bool estado;
+  bool estado=false;
   var infoRecuperado = [];
 
   @override
   void initState() {
     _tabController = TabController(length: 2, vsync: this);
-    estado = false;
+    
     getData(widget.id);
 
     super.initState();
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +45,9 @@ class _AcercadePlantasState extends State<AcercadePlantas>
             ? Container(
                 color: Colors.white,
                 child: Center(
-                  child: CircularProgressIndicator(),
+                  child: Container(
+                      width: MediaQuery.of(context).size.width * 0.1,
+                      child: Image.asset("assets/images/loadi.gif")),
                 ))
             : Stack(
                 children: <Widget>[
@@ -241,7 +243,7 @@ class _AcercadePlantasState extends State<AcercadePlantas>
                     body: TabBarView(
                       children: [
                         informacionPlantas(infoRecuperado),
-                        detallesPlantas(infoRecuperado),
+                        detallesPlantas(infoRecuperado), 
                       ],
                       controller: _tabController,
                       physics: new NeverScrollableScrollPhysics(),
@@ -768,25 +770,35 @@ class _AcercadePlantasState extends State<AcercadePlantas>
     });
   }
 
-  getDatas(nombre) async {
+  getDatas(nombre) {
+    
     FirebaseFirestore.instance
         .collection('plantas')
         .where('nombrecomun', isEqualTo: nombre)
         .get()
-        .then((value) {
-      setState(() {
-        estado = true;
-      });
+        .then((value) {  
 
-      value.docs.forEach((doc) {
-        if (value != null) {
-          infoRecuperado.clear();
-          value.docs.forEach((element) {
-            infoRecuperado.add(doc.data());
-            print(infoRecuperado);
-          });
-        }
-      });
+          var tamano= value.docs.length;          
+
+            value.docs.forEach((doc) {
+              if (value != null) {
+                infoRecuperado.clear();
+                value.docs.forEach((element) {
+                  infoRecuperado.add(doc.data());
+                  print(infoRecuperado);
+                  if (infoRecuperado.length == tamano) {
+                    setState(() {
+                      estado = true;
+                    });
+                    
+                  }
+                });
+              }
+            });
+
+          
     });
   }
+
+
 }

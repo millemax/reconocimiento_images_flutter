@@ -54,7 +54,9 @@ class _SearchPlantasState extends State<SearchPlantas> {
             ? Container(
                 color: Colors.white,
                 child: Center(
-                  child: CircularProgressIndicator(),
+                  child: Container(
+                      width: MediaQuery.of(context).size.width * 0.1,
+                      child: Image.asset("assets/images/loadi.gif")),
                 ),
               )
             : Stack(

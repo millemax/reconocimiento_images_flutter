@@ -20,6 +20,16 @@ class ResultPage extends StatefulWidget {
 }
 
 class _ResultPageState extends State<ResultPage> {
+  //----bottom al enviar y guardar las platnas
+  bool buttonPressed = true;
+
+  void _letsPressed() {
+    setState(() {
+      buttonPressed = !buttonPressed;
+    });
+  }
+//---------
+
   ProgressDialog progressDialog;
 
   //declara las variables
@@ -54,75 +64,201 @@ class _ResultPageState extends State<ResultPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text("Respuesta", style: TextStyle(color: Colors.white)),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text("Resultado", style: TextStyle(color: Colors.white)),
+          ],
+        ),
       ),
       body: _isloading
           ? Container(
               alignment: Alignment.center,
               child: CircularProgressIndicator(),
             )
-          : Stack(children: [
-              Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * 0.8,
-                  child: _image == null
-                      ? Container()
-                      : Image.file(
-                          _image,
-                          fit: BoxFit.fill,
-                        )),
-              Padding(
-                padding: const EdgeInsets.only(top: 500),
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 200,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(60),
-                      topRight: Radius.circular(60),
-                    ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 80, vertical: 40),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            Text("Planta:",
-                                style: TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.bold)),
-                            SizedBox(width: 20),
-                            _outputs != null
-                                ? Text(
-                                    "${_outputs[0]["label"]}",
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 18,
-                                      //fontWeight: FontWeight.w600
-                                    ),
-                                  )
-                                : Text('No puedo reconocerlo', maxLines: 2),
-                          ],
+          : Stack(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, left: 15),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * 0.93,
+                    height: MediaQuery.of(context).size.height * 0.6,
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                          width: 1,
+                          color: Theme.of(context).primaryColor,
                         ),
-                        SizedBox(height: 20),
-                        RaisedButton(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10)),
-                          onPressed: () {
-                            getPosition();
-                          },
-                          color: Color(0xFF06B7A2),
-                          child: Text('Guardar y leer mas',
-                              style: TextStyle(color: Colors.white)),
-                        ),
-                      ],
-                    ),
+                        borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                    child: _image == null
+                        ? Container()
+                        : ClipRRect(
+                            borderRadius: BorderRadius.circular(10.0),
+                            child: Image.file(
+                              _image,
+                              fit: BoxFit.fill,
+                            ),
+                          ),
                   ),
                 ),
-              ),
-            ]),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Container(
+                      alignment: Alignment.bottomCenter,
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height * 0.31,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.amber),
+                        /* color: Theme.of(context).primaryColor.withOpacity(0.3), */
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(60),
+                          topRight: Radius.circular(60),
+                        ),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              _outputs != null
+                                  ? Column(
+                                      children: [
+                                        Text(
+                                          "${_outputs[0]["label"].toUpperCase()}",
+                                          style: TextStyle(
+                                              letterSpacing: 2,
+                                              color: Colors.black,
+                                              fontSize: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  0.06,
+                                              fontWeight: FontWeight.w800),
+                                        ),
+                                      ],
+                                    )
+                                  : Text('.'),
+                            ],
+                          ),
+
+                          /*
+                            RaisedButton(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              onPressed: () {
+                                getPosition();
+                              },
+                              color: Color(0xFF06B7A2),
+                              child: Text('Guardar y leer mas',
+                                  style: TextStyle(color: Colors.white)),
+                            ), */
+                          SizedBox(height: 12),
+                          Text('Guardar',
+                              style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                  fontWeight: FontWeight.bold)),
+                          SizedBox(height: 10),
+                          GestureDetector(
+                            onTap: () {
+                              _letsPressed();
+                              getPosition();
+                            },
+                            child: buttonPressed ? myButton() : buttonTapped(),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+    );
+  }
+
+//------------------------------------boton GUARDAR PLANTA----------------
+  /*  Widget buttonTapped() {
+    return Container(
+      width: MediaQuery.of(context).size.width * 0.2,
+      height: MediaQuery.of(context).size.height * 0.1,
+      decoration: BoxDecoration(
+        /*  borderRadius: BorderRadius.circular(10.0), */
+        shape: BoxShape.circle,
+        color: Colors.amber,
+        boxShadow: [
+          BoxShadow(
+              color: Colors.white,
+              offset: Offset(4.0, 4.0),
+              blurRadius: 15.0,
+              spreadRadius: 1.0),
+          BoxShadow(
+              color: Colors.grey[600],
+              offset: Offset(-4.0, -4.0),
+              blurRadius: 10.0,
+              spreadRadius: 1.0)
+        ],
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            Colors.grey[700],
+            Colors.grey[600],
+            Colors.grey[500],
+            Colors.grey[200],
+          ],
+          stops: [0, 0.1, 0.3, 1],
+        ),
+      ),
+      child: Image.asset(
+        "assets/images/archivoo.png",
+        scale: 6,
+      ),
+    );
+  } */
+
+  Widget buttonTapped() {
+    return Container(
+      width: MediaQuery.of(context).size.width * 0.2,
+      height: MediaQuery.of(context).size.height * 0.1,
+      child: Image.asset("assets/images/gofo.gif"),
+    );
+  }
+
+  Widget myButton() {
+    return Container(
+      width: MediaQuery.of(context).size.width * 0.2,
+      height: MediaQuery.of(context).size.height * 0.1,
+      decoration: BoxDecoration(
+        /*  borderRadius: BorderRadius.circular(10.0), */
+        shape: BoxShape.circle,
+        color: Colors.amber,
+        boxShadow: [
+          BoxShadow(
+              color: Colors.grey[600],
+              offset: Offset(4.0, 4.0),
+              blurRadius: 15.0,
+              spreadRadius: 1.0),
+          BoxShadow(
+              color: Colors.white,
+              offset: Offset(-4.0, -4.0),
+              blurRadius: 15.0,
+              spreadRadius: 1.0)
+        ],
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            Colors.grey[200],
+            Colors.grey[300],
+            Colors.grey[400],
+            Colors.grey[500],
+          ],
+          stops: [0.1, 0.3, 0.8, 1],
+        ),
+      ),
+      child: Image.asset(
+        "assets/images/archivoo.png",
+        scale: 6,
+      ),
     );
   }
 
@@ -248,22 +384,48 @@ class _ResultPageState extends State<ResultPage> {
         alert();
       }
     });
-
+    print("******************************holapercents");
     print(_percent);
   }
 
 //mensaje de alerta que enviara cuando no reconozca una planta
   alert() {
     showDialog(
+        barrierDismissible: false,
         context: context,
         builder: (_) => new AlertDialog(
-              title: new Text("LO SIENTO !!"),
+              title: new Text(
+                "LO SIENTO !!",
+                style: TextStyle(color: Theme.of(context).primaryColor),
+              ),
               content: new Text(
-                  "Todavia no estoy preparado para reconocer estas plantas!"),
+                  "Todavia no estoy preparado para reconocer esta planta!"),
               actions: <Widget>[
-                FlatButton(
+                /* FlatButton(
                   child: Text('volver'),
                   onPressed: () {
+                    setState(() {
+                      _image = null;
+                      _outputs = null;
+                      _isloading = false;
+                      _percent = null;
+                    });
+                    Navigator.pushNamed(context, 'menu');
+                  },
+                ) */
+                GestureDetector(
+                  child: Container(
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                              width: 1, color: Theme.of(context).primaryColor),
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(10.0))),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 143, vertical: 10),
+                        child: Text("volver"),
+                      )),
+                  onTap: () {
                     setState(() {
                       _image = null;
                       _outputs = null;

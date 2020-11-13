@@ -90,15 +90,12 @@ class _UbicacionState extends State<Ubicacion> {
     final Marker marker= Marker(
     icon:  await getMarkerIcon(image, Size(150.0, 150.0)),                                           /* await BitmapDescriptor.fromAssetImage(ImageConfiguration(size: Size(24, 24)), 'assets/images/gps.png'),  */   
     markerId: new MarkerId(rng.toString()),
-    position: LatLng(latitud,longitud),
-    onTap: (){
-      Navigator.push(context,
-            MaterialPageRoute(builder: (context) => AcercadePlantas(id)));
-    },
+    position: LatLng(latitud,longitud),    
     infoWindow: InfoWindow(
       title: "Planta",
       snippet: nombreplanta, 
       onTap: (){
+        print('enviando el id:'+ id);
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => AcercadePlantas(id)));
       },     
@@ -122,7 +119,7 @@ class _UbicacionState extends State<Ubicacion> {
         backgroundColor: Colors.white,
         body:estado== false?Container(
           child: Center(
-            child: CircularProgressIndicator(),
+            child: Image.asset('assets/images/loadi.gif', scale: 3),
           ),
         ) 
         :GoogleMap(
