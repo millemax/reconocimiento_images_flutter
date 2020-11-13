@@ -41,7 +41,7 @@ class _AcercadePlantasState extends State<AcercadePlantas>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.red,
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: estado == false
             ? Container(
@@ -769,13 +769,14 @@ class _AcercadePlantasState extends State<AcercadePlantas>
         _latitud = doc.data()['latitud'];
         _longitud = doc.data()['longitud'];
       });
-      getDatas(_nombre);
+      getDatas(doc.data()['planta']);
     }).catchError((error) {
       print('no pudimos recuperar nada');
     });
   }
 
-  getDatas(nombre) {
+  getDatas(nombre) {    
+    print('nombre :'+ nombre);
     
     FirebaseFirestore.instance
         .collection('plantas')

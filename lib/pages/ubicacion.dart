@@ -101,10 +101,13 @@ class _UbicacionState extends State<Ubicacion> {
       },     
     ),
   );
-
-     setState(() {
+    if (this.mounted) {
+       setState(() {
       markers.add(marker);
     });
+      
+    }
+    
 
   
   }
