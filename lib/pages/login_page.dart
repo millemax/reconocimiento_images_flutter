@@ -17,6 +17,9 @@ class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _formKey1 = GlobalKey<FormState>();
   final GlobalKey<FormState> _formKey2 = GlobalKey<FormState>();
 
+  //-----visualizar constraseña-------------------------------------
+  bool _obscureText = true;
+  //-----------fin visualizar contrasena----------------------------
   String _email;
   String _nombres;
   String _password;
@@ -248,10 +251,57 @@ class _LoginPageState extends State<LoginPage> {
               .signInWithEmailAndPassword(email: _email, password: _password)
               .then((value) {
             Navigator.pushReplacementNamed(context, 'menu');
+          }).catchError((onError) {
+            print("==================================================");
+            print("no pudmismos autentificare");
+            _showMaterialDialog();
           });
         }
       },
     );
+  }
+
+//show alert dialog para las notificaciones
+  _showMaterialDialog() {
+    showDialog(
+        context: context,
+        builder: (_) => new AlertDialog(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  new Image.asset(
+                    "assets/images/cancel.png",
+                    scale: 5,
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  new Text(
+                      "No pudimos autentificarte, intentalo de nuevo o revisa tu conexion!!!",
+                      textAlign: TextAlign.center),
+                ],
+              ),
+              actions: <Widget>[
+                GestureDetector(
+                  child: Container(
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                              width: 1, color: Theme.of(context).primaryColor),
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(10.0))),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 119, vertical: 10),
+                        child: Text("OK"),
+                      )),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                  },
+                )
+              ],
+            ));
   }
 
   //-----------------boton para registraerse-----
@@ -287,40 +337,96 @@ class _LoginPageState extends State<LoginPage> {
               'correo': _email,
               'nombre': _nombres,
             }).then((value) {
-              Navigator.pushReplacementNamed(context, 'menu');
-              /* showDialog(
-                       context: context,
-                       barrierDismissible: false,
-                       builder: (BuildContext context){
-                         AlertDialog(
-                            title:Text('Ya estas Registrado!'),
-                            content: SingleChildScrollView(
-                              child: ListBody(
-                                children: [
-                                  Text('ya eres parte de medic plant'),
-                                  Text('gracias por registrarte'),
-                                ],
-                              ) ,
-                              ),
-                            actions: [
-                              FlatButton(
-                                onPressed: (){
-                                    Navigator.pushReplacementNamed(context, 'menu');
-                                },
-                                child: Text('ok'))
-                            ],
-
-                       );
-
-                       }
-                       
-                     );
-                  */
+              //----------------------MENSAJE DE BIENVENIDA NUEVOS USUARIOS NUEVOS-----
+              showDialog(
+                barrierDismissible: false,
+                context: context,
+                builder: (_) => new AlertDialog(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      new Image.asset(
+                        "assets/images/check.png",
+                        scale: 2.5,
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      new Text("Bienvenido a MEDICPLANT!!!",
+                          textAlign: TextAlign.center),
+                    ],
+                  ),
+                  actions: <Widget>[
+                    GestureDetector(
+                      child: Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                  width: 1,
+                                  color: Theme.of(context).primaryColor),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10.0))),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 119, vertical: 10),
+                            child: Text("OK"),
+                          )),
+                      onTap: () {
+                        Navigator.pushReplacementNamed(context, 'menu');
+                      },
+                    )
+                  ],
+                ),
+              );
             }).catchError((error) {
               //error al cargar los datos a firestore
             });
           }).catchError((error) {
             //error en crear usuario
+            //----------------------MENSAJE ERROR AL CREAR UN USUARIO -----
+            showDialog(
+              barrierDismissible: false,
+              context: context,
+              builder: (_) => new AlertDialog(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    new Image.asset(
+                      "assets/images/cancel.png",
+                      scale: 5,
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    new Text(
+                        "No pudimos registrarte, intentalo de nuevo o revisa tu conexion!!!",
+                        textAlign: TextAlign.center),
+                  ],
+                ),
+                actions: <Widget>[
+                  GestureDetector(
+                    child: Container(
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                width: 1,
+                                color: Theme.of(context).primaryColor),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10.0))),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 119, vertical: 10),
+                          child: Text("OK"),
+                        )),
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
+                  )
+                ],
+              ),
+            );
           });
         }
       },
@@ -437,6 +543,8 @@ class _LoginPageState extends State<LoginPage> {
                                       },
                                       keyboardType: TextInputType.emailAddress,
                                       icon: Icon(Icons.email),
+                                      suffix: IconButton(
+                                          icon: Icon(null), onPressed: () {}),
                                       obsecure: false,
                                       validator: emailValidator,
                                       hint: "Correo",
@@ -446,11 +554,20 @@ class _LoginPageState extends State<LoginPage> {
                                 Padding(
                                     padding: EdgeInsets.only(bottom: 15),
                                     child: CustomTextField(
+                                      icon: Icon(Icons.lock),
+                                      suffix: IconButton(
+                                          icon: Icon(_obscureText
+                                              ? Icons.visibility_off
+                                              : Icons.visibility),
+                                          onPressed: () {
+                                            setState(() {
+                                              _obscureText = !_obscureText;
+                                            });
+                                          }),
                                       onchanged: (valor) {
                                         _password = valor;
                                       },
-                                      icon: Icon(Icons.lock),
-                                      obsecure: true,
+                                      obsecure: _obscureText,
                                       validator: passwordValidator,
                                       hint: "Contraseña",
                                       label: "Contraseña",
@@ -655,6 +772,8 @@ class _LoginPageState extends State<LoginPage> {
                                         _nombres = valor;
                                       },
                                       icon: Icon(Icons.account_circle),
+                                      suffix: IconButton(
+                                          icon: Icon(null), onPressed: () {}),
                                       obsecure: false,
                                       validator: nombreValidator,
                                       hint: "Nombres",
@@ -669,6 +788,8 @@ class _LoginPageState extends State<LoginPage> {
                                       },
                                       keyboardType: TextInputType.emailAddress,
                                       icon: Icon(Icons.email),
+                                      suffix: IconButton(
+                                          icon: Icon(null), onPressed: () {}),
                                       obsecure: false,
                                       validator: emailValidator,
                                       hint: "Correo",
@@ -677,11 +798,20 @@ class _LoginPageState extends State<LoginPage> {
                                 Padding(
                                     padding: EdgeInsets.only(bottom: 20),
                                     child: CustomTextField(
+                                      icon: Icon(Icons.lock),
+                                      suffix: IconButton(
+                                          icon: Icon(_obscureText
+                                              ? Icons.visibility_off
+                                              : Icons.visibility),
+                                          onPressed: () {
+                                            setState(() {
+                                              _obscureText = !_obscureText;
+                                            });
+                                          }),
                                       onchanged: (valor) {
                                         _password = valor;
                                       },
-                                      icon: Icon(Icons.lock),
-                                      obsecure: true,
+                                      obsecure: _obscureText,
                                       validator: passwordValidator,
                                       hint: "Contraseña",
                                       label: "Contraseña",
@@ -779,6 +909,7 @@ class BottomWaveClipper extends CustomClipper<Path> {
 class CustomTextField extends StatelessWidget {
   final FormFieldSetter<String> onchanged;
   final Icon icon;
+  final IconButton suffix;
   final String hint;
   final String label;
   final bool obsecure;
@@ -789,6 +920,7 @@ class CustomTextField extends StatelessWidget {
       {this.onchanged,
       this.label,
       this.icon,
+      this.suffix,
       this.hint,
       this.obsecure = false,
       this.validator,
@@ -807,43 +939,48 @@ class CustomTextField extends StatelessWidget {
           fontSize: 17,
         ),
         decoration: InputDecoration(
-          labelStyle: TextStyle(
-            fontSize: 17,
-          ),
-          hintStyle: TextStyle(fontSize: 13),
-          labelText: label,
-          hintText: hint,
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide(
-              color: Theme.of(context).primaryColor,
-              width: 1,
+            labelStyle: TextStyle(
+              fontSize: 17,
             ),
-          ),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide(
-              color: Theme.of(context).primaryColor,
-              width: 1,
+            hintStyle: TextStyle(fontSize: 13),
+            labelText: label,
+            hintText: hint,
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(
+                color: Theme.of(context).primaryColor,
+                width: 1,
+              ),
             ),
-          ),
-          prefixIcon: Padding(
-            padding: const EdgeInsets.only(right: 10.0),
-            child: Container(
-              decoration: BoxDecoration(
-                border: Border(
-                  right: BorderSide(
-                      width: 1.0, color: Theme.of(context).primaryColor),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(
+                color: Theme.of(context).primaryColor,
+                width: 1,
+              ),
+            ),
+            prefixIcon: Padding(
+              padding: const EdgeInsets.only(right: 10.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border(
+                    right: BorderSide(
+                        width: 1.0, color: Theme.of(context).primaryColor),
+                  ),
+                ),
+                child: IconTheme(
+                  data: IconThemeData(color: Theme.of(context).primaryColor),
+                  child: icon,
                 ),
               ),
-              child: IconTheme(
-                data: IconThemeData(color: Theme.of(context).primaryColor),
-                child: icon,
-              ),
             ),
-          ),
-        ),
+            suffixIcon: IconTheme(
+                data: IconThemeData(color: Theme.of(context).primaryColor),
+                child: suffix)),
       ),
     );
   }
+
+//show alert dialog para las notificaciones
+
 }
