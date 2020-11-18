@@ -516,7 +516,7 @@ class _LoginPageState extends State<LoginPage> {
                                       Text(
                                         "Sesión",
                                         style: TextStyle(
-                                            fontSize: 40,
+                                            fontSize: 34.5,
                                             fontWeight: FontWeight.bold,
                                             color: Colors.white),
                                       ),
@@ -606,7 +606,7 @@ class _LoginPageState extends State<LoginPage> {
                                 "Iniciar",
                                 Colors.white,
                                 Colors.red,
-                                Theme.of(context).primaryColorDark,
+                                Theme.of(context).primaryColor,
                                 Colors.white),
                             height: 50,
                             width: MediaQuery.of(context).size.width * 0.45,
@@ -728,28 +728,33 @@ class _LoginPageState extends State<LoginPage> {
                                 child: Container(
                                   alignment: Alignment.center,
                                   padding:
-                                      EdgeInsets.only(bottom: 25, right: 40),
+                                      EdgeInsets.only(bottom: 25, right: 28),
                                   child: Text(
                                     "Regi",
                                     style: TextStyle(
-                                        fontSize: 44,
+                                        fontSize: 40,
                                         fontWeight: FontWeight.bold,
                                         color: Colors.white),
                                   ),
                                 ),
                               ),
-                              Positioned(
-                                child: Align(
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                    width: 130,
-                                    padding: EdgeInsets.only(top: 40, left: 28),
-                                    child: Text(
-                                      "stro",
-                                      style: TextStyle(
-                                          fontSize: 44,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white),
+
+                              Padding(
+                                padding: const EdgeInsets.only(top: 10.0),
+                                child: Positioned(
+                                  child: Align(
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      width: 130,
+                                      padding:
+                                          EdgeInsets.only(top: 40, left: 20),
+                                      child: Text(
+                                        "stro",
+                                        style: TextStyle(
+                                            fontSize: 40,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white),
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -830,7 +835,7 @@ class _LoginPageState extends State<LoginPage> {
                             "Registrarme",
                             Colors.white,
                             Colors.red,
-                            Theme.of(context).primaryColorDark,
+                            Theme.of(context).primaryColor,
                             Colors.white,
                           ),
                         ),
