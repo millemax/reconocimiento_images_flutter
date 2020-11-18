@@ -373,7 +373,7 @@ class _LoginPageState extends State<LoginPage> {
                             child: Text("OK"),
                           )),
                       onTap: () {
-                        Navigator.pushReplacementNamed(context, 'menu');
+                        Navigator.pushReplacementNamed(context, '/');
                       },
                     )
                   ],
