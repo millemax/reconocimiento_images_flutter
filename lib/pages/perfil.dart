@@ -217,7 +217,7 @@ class _PerfilState extends State<Perfil> {
                       GestureDetector(
                         onTap: () {
                           FirebaseAuth.instance.signOut().then((value) {
-                            SystemNavigator.pop();
+                            Navigator.pushNamed(context, '/');
                           }).catchError((value) {
                             print('error en cerrar sesion');
                           });
