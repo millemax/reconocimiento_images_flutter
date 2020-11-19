@@ -158,12 +158,17 @@ class _PerfilState extends State<Perfil> {
                         elevation: 10,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10)),
-                        child: ListTile(
-                          leading: Padding(
-                              padding: EdgeInsets.only(left: 15),
-                              child: Icon(Icons.email)),
-                          title:
-                              Title(color: Colors.black, child: Text(_correo)),
+                        child: SizedBox( height: 68,
+                            child: Padding(
+                              padding: const EdgeInsets.only(top:7),
+                              child: ListTile(
+                              leading: Padding(
+                                  padding: EdgeInsets.only(left: 15),
+                                  child: Icon(Icons.email)),
+                              title:
+                                  Title(color: Colors.black, child: Text(_correo)),
+                          ),
+                            ),
                         ),
                       ),
                       SizedBox(
@@ -176,7 +181,7 @@ class _PerfilState extends State<Perfil> {
                               borderRadius: BorderRadius.circular(10)),
                           child: ExpansionTile(
                             title: ListTile(
-                              leading: Icon(Icons.lock),
+                              leading: Icon(Icons.lock, size: 29),
                               title: Title(
                                   color: Colors.black,
                                   child: Text('Contraseña')),
@@ -226,14 +231,20 @@ class _PerfilState extends State<Perfil> {
                           elevation: 10,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10)),
-                          child: ListTile(
-                            leading: Padding(
-                              padding: EdgeInsets.only(left: 15),
-                              child: Icon(Icons.exit_to_app),
+                          child: SizedBox(
+                            height: 65,
+                            child: Padding(
+                              padding: const EdgeInsets.only(top:7),
+                              child: ListTile(
+                                leading: Padding(
+                                  padding: EdgeInsets.only(left: 15),
+                                  child: Icon(Icons.exit_to_app_outlined, size: 28),
+                                ),
+                                title: Title(
+                                    color: Colors.black,
+                                    child: Text('Cerrar Sesión')),
+                              ),
                             ),
-                            title: Title(
-                                color: Colors.black,
-                                child: Text('Cerrar Sesión')),
                           ),
                         ),
                       ),

@@ -231,7 +231,7 @@ class _LoginPageState extends State<LoginPage> {
       highlightElevation: 0.0,
       splashColor: splashColor,
       highlightColor: highlightColor,
-      elevation: 0.0,
+      elevation: 5,
       color: fillColor,
       //-----bordear
       shape: RoundedRectangleBorder(
@@ -490,40 +490,26 @@ class _LoginPageState extends State<LoginPage> {
                                   child: Container(
                                     width: 130,
                                     height: 130,
+                                    
                                     decoration: BoxDecoration(
                                       shape: BoxShape.circle,
-                                      color: Theme.of(context).primaryColor,
+                                      color: Colors.white,
                                     ),
+                                    child: Image.asset('assets/images/flowers.png', height: 300),
                                     alignment: Alignment.center,
                                   ),
                                 ),
                               ),
                               //-----------letra login--
-                              Positioned(
+                            /*   Positioned(
                                 child: Container(
                                   alignment: Alignment.center,
-                                  child: Column(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.only(top: 35),
-                                        child: Text(
-                                          "Iniciar",
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              color: Colors.white),
-                                        ),
-                                      ),
-                                      Text(
-                                        "Sesión",
-                                        style: TextStyle(
-                                            fontSize: 34.5,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white),
-                                      ),
-                                    ],
-                                  ),
+                                  child: ClipRRect(
+                                    child: Image.asset('assets/images/hojas.png', width: 150),
+                                    borderRadius: BorderRadius.circular(300),
+                                    ),
                                 ),
-                              ),
+                              ), */
                             ],
                           ),
                         ),
@@ -596,21 +582,15 @@ class _LoginPageState extends State<LoginPage> {
                         ),
 
                         //----------------boton registro en vista login---
-                        Padding(
-                          padding: EdgeInsets.only(
-                              left: 20,
-                              right: 20,
-                              bottom: MediaQuery.of(context).viewInsets.bottom),
-                          child: Container(
-                            child: _buttonEnvio(
-                                "Iniciar",
-                                Colors.white,
-                                Colors.red,
-                                Theme.of(context).primaryColor,
-                                Colors.white),
-                            height: 50,
-                            width: MediaQuery.of(context).size.width * 0.45,
-                          ),
+                        Container(
+                          child: _buttonEnvio(
+                              "Iniciar",
+                              Colors.white,
+                              Colors.red,
+                              Theme.of(context).primaryColor,
+                              Colors.white),
+                          height: 50,
+                          width: MediaQuery.of(context).size.width * 0.45,
                         ),
                         SizedBox(
                           height: 20,
