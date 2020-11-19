@@ -19,6 +19,7 @@ class Perfil extends StatefulWidget {
 class _PerfilState extends State<Perfil> {
   TextEditingController controller = TextEditingController();
   bool user = true;
+  String iduser;
   //variables para la camara
   File _image;
   String _correo;
@@ -35,9 +36,16 @@ class _PerfilState extends State<Perfil> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    setState(() {
+      iduser = FirebaseAuth.instance.currentUser.uid;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final String id = FirebaseAuth.instance.currentUser.uid;
-    getCorreo(id);
+    getCorreo(iduser);
     return SafeArea(
       child: Scaffold(
           floatingActionButton: Column(
@@ -85,7 +93,7 @@ class _PerfilState extends State<Perfil> {
                           StreamBuilder(
                               stream: FirebaseFirestore.instance
                                   .collection('users')
-                                  .doc(id)
+                                  .doc(iduser)
                                   .snapshots(),
                               builder: (context, snapshot) {
                                 DocumentSnapshot data = snapshot.data;
@@ -158,17 +166,18 @@ class _PerfilState extends State<Perfil> {
                         elevation: 10,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10)),
-                        child: SizedBox( height: 68,
-                            child: Padding(
-                              padding: const EdgeInsets.only(top:7),
-                              child: ListTile(
+                        child: SizedBox(
+                          height: 68,
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 7),
+                            child: ListTile(
                               leading: Padding(
                                   padding: EdgeInsets.only(left: 15),
                                   child: Icon(Icons.email)),
-                              title:
-                                  Title(color: Colors.black, child: Text(_correo)),
-                          ),
+                              title: Title(
+                                  color: Colors.black, child: Text(_correo)),
                             ),
+                          ),
                         ),
                       ),
                       SizedBox(
@@ -234,11 +243,12 @@ class _PerfilState extends State<Perfil> {
                           child: SizedBox(
                             height: 65,
                             child: Padding(
-                              padding: const EdgeInsets.only(top:7),
+                              padding: const EdgeInsets.only(top: 7),
                               child: ListTile(
                                 leading: Padding(
                                   padding: EdgeInsets.only(left: 15),
-                                  child: Icon(Icons.exit_to_app_outlined, size: 28),
+                                  child: Icon(Icons.exit_to_app_outlined,
+                                      size: 28),
                                 ),
                                 title: Title(
                                     color: Colors.black,
