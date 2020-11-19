@@ -195,7 +195,7 @@ class _OlvidoContrasenaState extends State<OlvidoContrasena> {
                                   restablecerContrasena(context);
                                 },
                                 padding: EdgeInsets.symmetric(
-                                  vertical: 15,
+                                  vertical: 12,
                                 ),
                                 color: Theme.of(context).primaryColor,
                                 shape: RoundedRectangleBorder(

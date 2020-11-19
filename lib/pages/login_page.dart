@@ -238,7 +238,7 @@ class _LoginPageState extends State<LoginPage> {
         borderRadius: BorderRadius.circular(10.0),
       ),
       child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
         child: Text(
           text,
           style: TextStyle(
@@ -318,7 +318,7 @@ class _LoginPageState extends State<LoginPage> {
         borderRadius: BorderRadius.circular(10.0),
       ),
       child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
         child: Text(
           text,
           style: TextStyle(
