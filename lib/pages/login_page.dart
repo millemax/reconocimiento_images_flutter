@@ -598,18 +598,23 @@ class _LoginPageState extends State<LoginPage> {
                         //----------------boton registro en vista login---
                         Padding(
                           padding: EdgeInsets.only(
-                              left: 20,
-                              right: 20,
-                              bottom: MediaQuery.of(context).viewInsets.bottom),
+                            left: 20,
+                            right: 20,
+                            bottom: MediaQuery.of(context).viewInsets.bottom,
+                          ),
                           child: Container(
-                            child: _buttonEnvio(
-                                "Iniciar",
-                                Colors.white,
-                                Colors.red,
-                                Theme.of(context).primaryColor,
-                                Colors.white),
-                            height: 50,
-                            width: MediaQuery.of(context).size.width * 0.45,
+                            /* width: MediaQuery.of(context).size.width * 0.9, */
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                _buttonEnvio(
+                                    "Iniciar",
+                                    Colors.white,
+                                    Colors.red,
+                                    Theme.of(context).primaryColor,
+                                    Colors.white),
+                              ],
+                            ),
                           ),
                         ),
                         SizedBox(
@@ -831,12 +836,17 @@ class _LoginPageState extends State<LoginPage> {
                             right: 20,
                             bottom: MediaQuery.of(context).viewInsets.bottom,
                           ),
-                          child: _buttonEnvioRegistro(
-                            "Registrarme",
-                            Colors.white,
-                            Colors.red,
-                            Theme.of(context).primaryColor,
-                            Colors.white,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              _buttonEnvioRegistro(
+                                "Registrarme",
+                                Colors.white,
+                                Colors.red,
+                                Theme.of(context).primaryColor,
+                                Colors.white,
+                              ),
+                            ],
                           ),
                         ),
                         SizedBox(

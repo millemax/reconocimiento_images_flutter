@@ -186,16 +186,18 @@ class _OlvidoContrasenaState extends State<OlvidoContrasena> {
                         Padding(
                           padding: EdgeInsets.only(
                               bottom: 5, left: 15, right: 15, top: 15),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
                               RaisedButton(
+                                elevation: 5,
                                 onPressed: () {
                                   restablecerContrasena(context);
                                 },
                                 padding: EdgeInsets.symmetric(
-                                    vertical: 15, horizontal: 140),
-                                color: Theme.of(context).primaryColorDark,
+                                  vertical: 15,
+                                ),
+                                color: Theme.of(context).primaryColor,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.all(
                                     Radius.circular(10),
@@ -203,6 +205,7 @@ class _OlvidoContrasenaState extends State<OlvidoContrasena> {
                                 ),
                                 child: Text(
                                   "Enviar",
+                                  textAlign: TextAlign.center,
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold),
